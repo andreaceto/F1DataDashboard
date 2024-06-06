@@ -1,0 +1,14 @@
+blinker==1.8.2
+click==8.1.7
+colorama==0.4.6
+dnspython==2.6.1
+Flask==3.0.3
+Flask-PyMongo==2.3.0
+itsdangerous==2.2.0
+Jinja2==3.1.4
+MarkupSafe==2.1.5
+pip==24.0
+pymongo==4.7.3
+setuptools==69.5.1
+Werkzeug==3.0.3
+wheel==0.43.0
