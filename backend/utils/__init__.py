@@ -1,0 +1,1 @@
+# Questa cartella contiene funzioni di utilità generali che possono essere utilizzate in tutto il progetto.
