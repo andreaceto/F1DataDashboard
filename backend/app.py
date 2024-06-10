@@ -1,16 +1,16 @@
 from flask import Flask
-from flask_pymongo import PyMongo
-from routes import init_routes
+from routes import home_route, raceStats_route, teamSection_route, calendar_route, history_route
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_pyfile('config.py')
-    mongo = PyMongo(app)
+# Create a Flask application instance
+app = Flask(__name__)
 
-    init_routes(app, mongo)
+# Register blueprints for different routes
+app.register_blueprint(home_route.home_bp)
+app.register_blueprint(raceStats_route.race_stats_bp)
+app.register_blueprint(teamSection_route.team_section_bp)
+app.register_blueprint(calendar_route.calendar_bp)
+app.register_blueprint(history_route.history_bp)
 
-    return app
-
-if __name__ == "__main__":
-    app = create_app()
+if __name__ == '__main__':
+    # Run the Flask application
     app.run(debug=True)
