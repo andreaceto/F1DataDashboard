@@ -1,22 +1,21 @@
 from flask import Blueprint, jsonify, request
-from data.model import Team
+from services.teamSection_service import get_teams, get_team
 
-# Define a blueprint for team section routes
 team_section_bp = Blueprint('team_section', __name__)
 
 @team_section_bp.route('/teams', methods=['GET'])
-def get_teams():
+def teams():
     """
     Route to get information about all teams.
     
     Returns:
         response (json): A JSON response containing information about all teams.
     """
-    teams = Team.find()
-    return jsonify(list(teams)), 200
+    teams = get_teams()
+    return jsonify(teams), 200
 
 @team_section_bp.route('/teams/<team_id>', methods=['GET'])
-def get_team(team_id):
+def team(team_id):
     """
     Route to get information about a specific team.
     
@@ -26,7 +25,8 @@ def get_team(team_id):
     Returns:
         response (json): A JSON response containing information about the specified team or an error message.
     """
-    team = Team.find_one({"team_id": team_id})
-    if team:
-        return jsonify(team), 200
-    return jsonify({"error": "Team not found"}), 404
+    team_info = get_team(team_id)
+    if not team_info:
+        return jsonify({"error": "Team not found"}), 404
+
+    return jsonify(team_info), 200

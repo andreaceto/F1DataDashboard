@@ -1,16 +1,15 @@
 from flask import Blueprint, jsonify
-from data.model import History
+from services.history_service import get_history
 
-# Define a blueprint for history routes
 history_bp = Blueprint('history', __name__)
 
 @history_bp.route('/history', methods=['GET'])
-def get_history():
+def history():
     """
     Route to get historical data.
     
     Returns:
         response (json): A JSON response containing historical data.
     """
-    history = History.find()
-    return jsonify(list(history)), 200
+    history = get_history()
+    return jsonify(history), 200
