@@ -1,28 +1,19 @@
-import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
 from data.model import Results, Races, Drivers, Constructors
-
-def read_csv(name, **kwargs):
-    df = pd.read_csv(f'../input/formula-1-race-data/{name}', na_values=r'\N', **kwargs)
-    return df
-
-# Your previous data processing functions here...
-# For example, race_key, races_subset, etc.
+from services.common_service import get_dataframe  # Import the common utility function
 
 def generate_home_visualizations():
-    # Read data (example, adapt as necessary)
-    races = read_csv('races.csv', index_col='raceId')
-    results = read_csv('results.csv')
-    drivers = read_csv('drivers.csv')
-    constructors = read_csv('constructors.csv')
-    # Additional data processing here...
+    # Fetch data from MongoDB collections and convert to DataFrames
+    results_df = get_dataframe(Results.collection)
+    races_df = get_dataframe(Races.collection)
+    drivers_df = get_dataframe(Drivers.collection)
+    constructors_df = get_dataframe(Constructors.collection)
 
-    # Example visualization: points over time for a specific driver
+    # Example visualization: Points over time for a specific driver
     fig, ax = plt.subplots()
-    driver_results = results[results['driverId'] == 1]  # Example driver ID
+    driver_results = results_df[results_df['driverId'] == 1]  # Example driver ID
     ax.plot(driver_results['raceId'], driver_results['points'])
     ax.set_title('Driver Points Over Time')
     ax.set_xlabel('Race ID')
