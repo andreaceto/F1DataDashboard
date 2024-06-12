@@ -2,22 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Home = () => {
-    const [plot, setPlot] = useState(null);
+    const [data, setData] = useState(null);
 
     useEffect(() => {
-        axios.get('/api/home')  // Ensure this matches your Flask route
+        axios.get('/')  // Ensure this matches your Flask route
             .then(response => {
-                setPlot(response.data.plot);
+                setData(response.data);
             })
             .catch(error => {
-                console.error('Error fetching the plot data', error);
+                console.error('Error fetching the home data', error);
             });
     }, []);
+
+    if (!data) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div>
             <h1>F1 Data Dashboard</h1>
-            {plot ? <img src={`data:image/png;base64,${plot}`} alt="Driver Points Over Time" /> : 'Loading...'}
+            <div>
+                <h2>F1 Drivers' World Championship</h2>
+                <img src={`data:image/png;base64,${data['driver_championship_plot']}`} alt="F1 Drivers' World Championship" />
+            </div>
         </div>
     );
 };
