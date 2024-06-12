@@ -12,6 +12,5 @@ def home():
         response (json): A JSON response containing the processed data.
     """
     data = generate_home_data()
-    if(data): print(data)
-    else: print("No data")
+    
     return jsonify(data)
