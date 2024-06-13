@@ -1,197 +1,130 @@
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import base64
-from io import BytesIO
-from services.common_service import YEAR, TEAM_C, DRIVER_C, DRIVER_LS, LINESTYLES, get_dataframe
+from collections import defaultdict
+from services.common_service import TEAM_C, DRIVER_C, DRIVER_LS, LINESTYLES, get_dataframe
 from data.model import *
 import os
-import json
 
-def race_key(race_year, race_round):
-    return (race_year * 100) + race_round
+def get_championship_data(year):
+    """
+    Retrieves race and result data for the specified year, along with driver names.
 
-def races_subset(df, races, race_ids):
-    df = df[df.raceId.isin(race_ids)].copy()
-    df = df.join(races[['round', 'raceKey']], on='raceId')
-    df['round'] -= df['round'].min()
-    return df.set_index('round').sort_index().drop_duplicates()
+    Args:
+        year (int): The year for which to retrieve the data.
 
-def add_lap_0(df):
-    copy = df.T
-    copy.insert(0, 0, 0)
-    return copy.T
+    Returns:
+        tuple: A tuple containing a list of race results, a dictionary mapping race IDs to rounds,
+               and a dictionary mapping driver IDs to driver names.
+    """
+    # Query to get race data for the specified year
+    races = list(Races.collection.find({'year': year}, {'name': 1, 'raceId': 1, 'round': 1, '_id': 0}).sort('round'))
+    # Extract race IDs from results
+    race_ids = [race['raceId'] for race in races]
 
-def driver_tag(driver_df_row):
-    return ('<a href="{url}" title="Number: {number:.0f}\n'
-            'Nationality: {nationality}">{Driver}</a>').format(**driver_df_row)
-
-def constructor_tag(constructor_df_row):
-    return ('<a href="{url}" title="Nationality: {nationality}">'
-            '{name}</a>').format(**constructor_df_row)
-
-def formatter(v):
-    if type(v) is str:
-        return v
-    if pd.isna(v) or v <= 0:
-        return ''
-    if v == int(v):
-        return f'{v:.0f}'
-    return f'{v:.1f}'
-
-def table_html(table, caption):
-    return (f'<h3>{caption}</h3>' +
-            table.style.format(formatter).to_html())
-
-# Processing for Drivers & Constructors championship tables
-def format_standings(df, results, key):
-    df = df.sort_values('position')
-    gb = results.groupby(key)
-    df['Position'] = df.positionText
-    df['scores'] = gb.score.sum()
-    df['podiums'] = gb.podium.sum()
-    return df
-
-# Drivers championship table
-def drivers_standings(df, drivers, results):
-    index = 'driverId'
-    df = df.set_index(index)
-    df = df.join(drivers)
-    df = format_standings(df, index)
-    df['Team'] = results.groupby(index).Team.last()
-    use = ['Position', 'Driver',  'Team', 'points', 'wins', 'podiums', 'scores', 'nationality' ]
-    df = df[use].set_index('Position')
-    df.columns = df.columns.str.capitalize()
-    return df
-
-# Constructors championship table
-def constructors_standings(df, constructors, drivers, results):
-    index = 'constructorId'
-    df = df.set_index(index)
-    df = df.join(constructors)
-    df = format_standings(df, index)
+    # Query to get race results
+    results = list(Results.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'position': 1, 'points': 1, '_id': 0}))
+    sprint_results = list(SprintResults.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'position': 1, 'points': 1, '_id': 0}))
+    results = results + sprint_results
     
-    # add drivers for team
-    tmp = results.join(drivers.drop(labels="number", axis=1), on='driverId')
-    df = df.join(tmp.groupby(index).Driver.unique().str.join(', ').to_frame('Drivers'))
+    # Filter races to only include those that have results
+    completed_race_ids = set(result['raceId'] for result in results)
+    races = [race for race in races if race['raceId'] in completed_race_ids]
+    
+    # Extract driver IDs from results
+    driver_ids = list(set(result['driverId'] for result in results))
 
-    use = ['Position', 'name', 'points', 'wins', 'podiums', 'scores', 'nationality', 'Drivers' ]
-    df = df[use].set_index('Position')
-    df.columns = df.columns.str.capitalize()
-    return df
+    # Query to get driver names for the relevant driver IDs
+    drivers = list(Drivers.collection.find({'driverId': {'$in': driver_ids}}, {'driverId': 1, 'forename': 1, 'surname': 1, '_id': 0}))
 
-# Race results table
-def format_results(df, constructors):
-    df['Team'] = df.constructorId.map(constructors.name)
-    df['Position'] = df.positionOrder
-    use = ['Driver', 'Team', 'grid', 'Position', 'points', 'laps', 'time', 'status' ]
-    df = df[use].sort_values('Position')
-    df = df.set_index('Position')
-    df.columns = df.columns.str.capitalize()
-    return df
+    return races, results, drivers
 
-def generate_base64_image(fig):
-    img = BytesIO()
-    fig.savefig(img, format='png')
-    img.seek(0)
-    plot_url = base64.b64encode(img.getvalue()).decode('utf8')
-    plt.close(fig)
-    return plot_url
+def generate_drivers_championship_plot(year):
+    """
+    Generates the drivers' championship plot for the specified year and saves it as an image.
 
-def generate_home_data():
+    Returns:
+        dict: A dictionary containing the relative path to the generated plot image.
+    """
+    races, results, drivers = get_championship_data(year)
+    print(pd.DataFrame(races))
+    print(pd.DataFrame(results))
+    print(pd.DataFrame(drivers))
 
-    # Fetch data from MongoDB collections and convert to DataFrames
-    circuits = get_dataframe(Circuits.collection)
-    constructor_results = get_dataframe(ConstructorResults.collection)
-    constructors_standings = get_dataframe(ConstructorStandings.collection)
-    constructors = get_dataframe(Constructors.collection)
-    driver_standings = get_dataframe(DriverStandings.collection)
-    drivers = get_dataframe(Drivers.collection)
-    lap_times = get_dataframe(LapTimes.collection)
-    pit_stops = get_dataframe(PitStops.collection)
-    qualifying = get_dataframe(Qualifying.collection)
-    races = get_dataframe(Races.collection)
-    results = get_dataframe(Results.collection)
-    seasons = get_dataframe(Seasons.collection)
-    sprint_results = get_dataframe(SprintResults.collection)
-    status = get_dataframe(Status.collection)
-    safety_cars = get_dataframe(SafetyCars.collection)
-    red_flags = get_dataframe(RedFlags.collection)
-    virtual_safety_cars = get_dataframe(VirtualSafetyCarEstimates.collection)
+    # Create a map driver -> {race -> points}, summing points if there are multiple results for the same driver and race
+    driver_points = defaultdict(lambda: defaultdict(int))
+    for result in results:
+        driver_id = result['driverId']
+        race_id = result['raceId']
+        points = result['points']
+        driver_points[driver_id][race_id] += points
+    
+    # Create a dictionary mapping race IDs to GP names
+    race_names = {race['raceId']: race['name'].replace("Grand Prix", "GP") for race in races}
 
-    # To sequence the races if they did not happen in order of raceId (ie. 2021)
-    races['raceKey'] = race_key(races['year'], races['round'])
+    # Since the races are already sorted by round in the query, we can use them directly
+    sorted_races = [race['raceId'] for race in races]
 
-    # For display in HTML tables
-    drivers['display'] = drivers.surname
-    drivers['Driver'] = drivers['forename'] + " " + drivers['surname']
-    # Convert 'number' to numeric, coercing errors to NaN
-    drivers['number'] = pd.to_numeric(drivers['number'], errors='coerce')
-    drivers['Driver'] = drivers.apply(driver_tag, axis=1)
-    constructors['label'] = constructors['name']
-    constructors['name'] = constructors.apply(constructor_tag, axis=1)
+    # Calculate cumulative points for each driver
+    driver_cumulative_points = {}
+    for driver_id, race_points in driver_points.items():
+        cumulative_points = [0]  # Start from 0
+        total_points = 0
+        for race_id in sorted_races:
+            total_points += race_points.get(race_id, 0)
+            cumulative_points.append(total_points)
+        driver_cumulative_points[driver_id] = cumulative_points
 
-    # Join fields
-    results['status'] = results.statusId.map(status.status)
-    results['Team'] = results.constructorId.map(constructors.name)
-    results['score'] = results.points > 0
+    # Create a dictionary mapping driver IDs to driver names
+    driver_names = {driver['driverId']: f"{driver['forename']} {driver['surname']}" for driver in drivers}
 
-    # Convert 'position' to numeric, coercing errors to NaN
-    results['position'] = pd.to_numeric(results['position'], errors='coerce')
-    # Perform the comparison
-    results['podium'] = results.position <= 3
+    # Sort drivers by their final cumulative points in descending order
+    sorted_drivers = sorted(driver_cumulative_points.items(), key=lambda x: x[1][-1], reverse=True)
 
-    races = races.loc[races.year == YEAR].sort_values('round').copy()
-    races.index = races['raceId']
-    results = results[results.raceId.isin(races.index)].copy()
-    lap_times = lap_times[lap_times.raceId.isin(races.index)].copy()
-    # Save Ids of races that have actually happened (i.e. have valid lap-times).
-    race_ids = np.unique(lap_times.raceId)
-    driver_standings = races_subset(driver_standings, races, race_ids)
-    constructors_standings = races_subset(constructors_standings, races, race_ids)
-    sprint_results = sprint_results[sprint_results.raceId.isin(races.index)].copy()
-    lap_times = lap_times.merge(results[['raceId', 'driverId', 'positionOrder']], on=['raceId', 'driverId'])
-    lap_times['seconds'] = lap_times.pop('milliseconds') / 1000
-
+    # Generate the plot
     plt.rc("figure", figsize=(16, 12))
     plt.rc("font", size=(14))
     plt.rc("axes", xmargin=0.01)
 
-    # Championship position traces
-    champ = driver_standings.groupby("driverId").position.last().to_frame("Pos")
-    champ = champ.join(drivers)
-    order = np.argsort(champ.Pos)
-    color = [DRIVER_C[d] for d in champ.index[order]]
-    style = [LINESTYLES[DRIVER_LS[d]] for d in champ.index[order]]
-    labels = champ.Pos.astype(str) + ". " + champ.display
-
-    chart = driver_standings.pivot(index="raceKey", columns="driverId", values="points")
-    names = races.set_index("raceKey").reindex(chart.index).name
-    names = names.str.replace("Grand Prix", "GP").rename("Race")
-    chart.index = names
-    chart.columns = labels
-
-    # Add origin
-    row = chart.iloc[0]
-    chart = pd.concat(((row * 0).to_frame("").T, chart))
-
     fig, ax = plt.subplots()
-    chart.iloc[:, order].plot(ax=ax, title=f"F1 Drivers' World Championship — {YEAR}", color=color, style=style)
-    ax.set_xticks(range(chart.shape[0]))
-    ax.set_xticklabels(chart.index, rotation=45)
+    for position, (driver_id, points) in enumerate(sorted_drivers, start=1):
+        driver_name = driver_names.get(driver_id, f"Driver {driver_id}")
+        ax.plot(range(len(points)), points, label=f"{position}. {driver_name}", color = DRIVER_C[driver_id], linestyle = LINESTYLES[DRIVER_LS[driver_id]])
+
+
+    ax.set_xticks(range(len(sorted_races) + 1))  # +1 to account for the starting 0
+    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=45)
     ax.grid(axis="x", linestyle="--")
     ax.set_ylabel("Points")
-    legend_opts = dict(bbox_to_anchor=(1.02, 0, 0.2, 1),
-                       loc="upper right",
-                       ncol=1,
-                       shadow=True,
-                       edgecolor="black",
-                       mode="expand",
-                       borderaxespad=0.)
-    ax.legend(**legend_opts)
+    ax.set_title(f"F1 Drivers' World Championship — {year}")
+    ax.legend()
 
-    driver_championship_plot = generate_base64_image(fig)
 
-    return {
-        'driver_championship_plot': driver_championship_plot
-    }
+    # Save the plot
+    neutral_path = os.path.join('static', 'images', 'driver_championship_plot.png')
+    storage_path = os.path.join(os.getcwd(), neutral_path)
+    return_path = os.path.join('http://127.0.0.1:5000', neutral_path)
+    fig.savefig(storage_path, format='png')
+    plt.close(fig)
+
+    return {'driver_championship_plot_path': return_path}
+
+def generate_home_data():
+    """
+    Generates the home data including the driver championship plot path.
+
+    Returns:
+        dict: A dictionary containing the relative path to the generated plot image.
+    """
+    neutral_path = os.path.join('static', 'images', 'driver_championship_plot.png')
+    storage_path = os.path.join(os.getcwd(), neutral_path)
+    return_path = os.path.join('http://127.0.0.1:5000', neutral_path)
+
+    if os.path.exists(storage_path):
+        return {
+            'driver_championship_plot_path': return_path
+        }
+
+    return generate_drivers_championship_plot(2024)

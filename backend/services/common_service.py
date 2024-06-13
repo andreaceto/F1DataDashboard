@@ -1,7 +1,5 @@
 import pandas as pd
 
-YEAR = 2024
-
 TEAM_C = {
 # ConstructorId : Color Hex Code
     9: "#3671C6", # Red Bull
