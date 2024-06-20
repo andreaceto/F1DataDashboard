@@ -28,8 +28,41 @@ const Home = () => {
         <div>
             <h1>F1 Data Dashboard</h1>
             <div>
+                <h2>Drivers' Standings</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Driver</th>
+                            <th>Nationality</th>
+                            <th>Team</th>
+                            <th>Points</th>
+                            <th>Wins</th>
+                            <th>Sprint Wins</th>
+                            <th>Podiums</th>
+                            <th>Sprint Podiums</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.drivers_standings_table.map((driver, index) => (
+                            <tr key={index}>
+                                <td>{driver.Position}</td>
+                                <td>{driver.Driver}</td>
+                                <td>{driver.Nationality}</td>
+                                <td>{driver.Team}</td>
+                                <td>{driver.Points}</td>
+                                <td>{driver.Wins}</td>
+                                <td>{driver.SprintWins}</td>
+                                <td>{driver.Podiums}</td>
+                                <td>{driver.SprintPodiums}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div>
                 <h2>F1 Drivers' World Championship</h2>
-                <img src={data.driver_championship_plot_path} alt="F1 Drivers' World Championship" width="800" height="600"/>
+                <img src={data.driver_championship_plot_path} alt="F1 Drivers' World Championship" />
             </div>
         </div>
     );
