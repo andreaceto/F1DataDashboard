@@ -1,7 +1,5 @@
 import pandas as pd
 
-YEAR = 2024
-
 TEAM_C = {
 # ConstructorId : Color Hex Code
     9: "#3671C6", # Red Bull
@@ -109,16 +107,3 @@ LINESTYLES = {
     "dashdot": '-.',
     "dashed": '--'
 }
-
-def get_dataframe(collection):
-    """
-    Convert MongoDB collection to pandas DataFrame.
-    
-    Args:
-        collection (Collection): The MongoDB collection.
-    
-    Returns:
-        DataFrame: The resulting pandas DataFrame.
-    """
-    data = list(collection.find())
-    return pd.DataFrame(data)
