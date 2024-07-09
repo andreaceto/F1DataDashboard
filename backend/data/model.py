@@ -1,382 +1,221 @@
 from pymongo.collection import Collection
-from config import get_database
+from config import get_databases
 
-# Get the database instance
-db = get_database()
+# Get the database instances
+databases = get_databases()
 
-class Results:
-    collection: Collection = db['results']
+# Access the individual databases
+db_race_data = databases['F1_Race_Data']
+db_race_events = databases['F1_Race_Events']
 
-    @staticmethod
-    def find(query):
-        """
-        Finds multiple result documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
-        return Results.collection.find(query)
-
-    @staticmethod
-    def find_one(query):
-        """
-        Finds a single result document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
-        return Results.collection.find_one(query)
-
-class Races:
-    collection: Collection = db['races']
-
-    @staticmethod
-    def find(query):
-        """
-        Finds multiple race documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
-        return Races.collection.find(query)
-
-    @staticmethod
-    def find_one(query):
-        """
-        Finds a single race document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
-        return Races.collection.find_one(query)
-
-class Drivers:
-    collection: Collection = db['drivers']
-
-    @staticmethod
-    def find(query):
-        """
-        Finds multiple driver documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
-        return Drivers.collection.find(query)
-
-    @staticmethod
-    def find_one(query):
-        """
-        Finds a single driver document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
-        return Drivers.collection.find_one(query)
-
-class Constructors:
-    collection: Collection = db['constructors']
-
-    @staticmethod
-    def find(query):
-        """
-        Finds multiple constructor documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
-        return Constructors.collection.find(query)
-
-    @staticmethod
-    def find_one(query):
-        """
-        Finds a single constructor document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
-        return Constructors.collection.find_one(query)
-
+# F1_Race_Data collections
 class Circuits:
-    collection: Collection = db['circuits']
+    collection: Collection = db_race_data['circuits']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple circuit documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
         return Circuits.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single circuit document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return Circuits.collection.find_one(query)
 
 class ConstructorResults:
-    collection: Collection = db['constructor_results']
+    collection: Collection = db_race_data['constructor_results']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple constructor result documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
         return ConstructorResults.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single constructor result document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return ConstructorResults.collection.find_one(query)
 
 class ConstructorStandings:
-    collection: Collection = db['constructor_standings']
+    collection: Collection = db_race_data['constructor_standings']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple constructor standing documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
         return ConstructorStandings.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single constructor standing document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return ConstructorStandings.collection.find_one(query)
 
-class DriverStandings:
-    collection: Collection = db['driver_standings']
+class Constructors:
+    collection: Collection = db_race_data['constructors']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple driver standing documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
+        return Constructors.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return Constructors.collection.find_one(query)
+
+class DriverStandings:
+    collection: Collection = db_race_data['driver_standings']
+
+    @staticmethod
+    def find(query):
         return DriverStandings.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single driver standing document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return DriverStandings.collection.find_one(query)
 
-class LapTimes:
-    collection: Collection = db['lap_times']
+class Drivers:
+    collection: Collection = db_race_data['drivers']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple lap time documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
+        return Drivers.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return Drivers.collection.find_one(query)
+
+class LapTimes:
+    collection: Collection = db_race_data['lap_times']
+
+    @staticmethod
+    def find(query):
         return LapTimes.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single lap time document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return LapTimes.collection.find_one(query)
 
 class PitStops:
-    collection: Collection = db['pit_stops']
+    collection: Collection = db_race_data['pit_stops']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple pit stop documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
         return PitStops.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single pit stop document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return PitStops.collection.find_one(query)
 
 class Qualifying:
-    collection: Collection = db['qualifying']
+    collection: Collection = db_race_data['qualifying']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple qualifying documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
         return Qualifying.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single qualifying document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return Qualifying.collection.find_one(query)
 
-class Seasons:
-    collection: Collection = db['seasons']
+class Races:
+    collection: Collection = db_race_data['races']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple season documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
+        return Races.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return Races.collection.find_one(query)
+
+class Results:
+    collection: Collection = db_race_data['results']
+
+    @staticmethod
+    def find(query):
+        return Results.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return Results.collection.find_one(query)
+
+class Seasons:
+    collection: Collection = db_race_data['seasons']
+
+    @staticmethod
+    def find(query):
         return Seasons.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single season document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return Seasons.collection.find_one(query)
 
-class Status:
-    collection: Collection = db['status']
+class SprintResults:
+    collection: Collection = db_race_data['sprint_results']
 
     @staticmethod
     def find(query):
-        """
-        Finds multiple status documents matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            documents (Cursor): A cursor to the documents.
-        """
+        return SprintResults.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return SprintResults.collection.find_one(query)
+
+class Status:
+    collection: Collection = db_race_data['status']
+
+    @staticmethod
+    def find(query):
         return Status.collection.find(query)
 
     @staticmethod
     def find_one(query):
-        """
-        Finds a single status document matching the query.
-        
-        Args:
-            query (dict): The query to match.
-        
-        Returns:
-            document (dict): The matched document.
-        """
         return Status.collection.find_one(query)
+
+# F1_Race_Events collections
+
+class FatalAccidentsDrivers:
+    collection: Collection = db_race_events['fatal_accidents_drivers']
+
+    @staticmethod
+    def find(query):
+        return FatalAccidentsDrivers.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return FatalAccidentsDrivers.collection.find_one(query)
+
+class FatalAccidentsMarshalls:
+    collection: Collection = db_race_events['fatal_accidents_marshalls']
+
+    @staticmethod
+    def find(query):
+        return FatalAccidentsMarshalls.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return FatalAccidentsMarshalls.collection.find_one(query)
+
+class RedFlags:
+    collection: Collection = db_race_events['red_flags']
+
+    @staticmethod
+    def find(query):
+        return RedFlags.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return RedFlags.collection.find_one(query)
+
+class SafetyCars:
+    collection: Collection = db_race_events['safety_cars']
+
+    @staticmethod
+    def find(query):
+        return SafetyCars.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return SafetyCars.collection.find_one(query)
+
+class VirtualSafetyCarEstimates:
+    collection: Collection = db_race_events['virtual_safety_car_estimates']
+
+    @staticmethod
+    def find(query):
+        return VirtualSafetyCarEstimates.collection.find(query)
+
+    @staticmethod
+    def find_one(query):
+        return VirtualSafetyCarEstimates.collection.find_one(query)

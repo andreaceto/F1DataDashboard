@@ -1,0 +1,93 @@
+body {
+  background-color: #f0f1f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.calendar-container {
+  font-family: Arial, sans-serif;
+  padding: 2vw; 
+  text-align: center;
+  background-color: #00010c;
+  color: #ffffff;
+  width: 90%; /* Larghezza del container */
+  max-width: 1000px; /* Larghezza massima del container */
+  height: auto; /* Altezza del container */
+  margin: 0 auto; /* Centramento orizzontale */
+}
+
+.calendar-logo {
+  width: 100%; /* Larghezza pari al 100% del container */
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  height: 100%;
+  overflow-y: auto;
+  padding: 1rem; /* Add some padding to the grid container */
+  box-sizing: border-box; /* Make sure the padding is included in the width calculation */
+}
+
+.calendar-item {
+  background-color: #1b1a1a;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.calendar-item:hover {
+  background-color: #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
+  transition: all 0.3s ease-in-out;
+}
+
+.round {
+  background-color: #ed0000;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+}
+
+.round.past {
+  background-color: #086e08;
+}
+
+.race-info {
+  text-align: center;
+}
+
+.race-flag img {
+  width: 60px;
+  height: 35px;
+  margin-bottom: 0.5rem;
+}
+
+.race-location {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.race-name {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.race-date {
+  font-size: 0.9rem;
+}

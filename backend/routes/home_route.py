@@ -1,14 +1,16 @@
 from flask import Blueprint, jsonify
+from services.home_service import generate_home_data
 
-# Define a blueprint for the home route
 home_bp = Blueprint('home', __name__)
 
-@home_bp.route('/')
+@home_bp.route('/', methods=['GET'])
 def home():
     """
-    Home route that returns a welcome message.
+    Home route that returns processed data for the homepage.
     
     Returns:
-        response (json): A JSON response with a welcome message.
+        response (json): A JSON response containing the processed data.
     """
-    return jsonify({"message": "Welcome to F1 Data Dashboard!"})
+    data = generate_home_data()
+    
+    return jsonify(data)

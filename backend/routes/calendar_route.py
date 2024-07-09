@@ -1,16 +1,15 @@
 from flask import Blueprint, jsonify
-from data.model import Calendar
+from services.calendar_service import get_calendar
 
-# Define a blueprint for calendar routes
 calendar_bp = Blueprint('calendar', __name__)
 
 @calendar_bp.route('/calendar', methods=['GET'])
-def get_calendar():
+def calendar():
     """
     Route to get the race calendar.
     
     Returns:
         response (json): A JSON response containing the race calendar.
     """
-    calendar = Calendar.find()
-    return jsonify(list(calendar)), 200
+    calendar = get_calendar(2024)
+    return jsonify(calendar), 200
