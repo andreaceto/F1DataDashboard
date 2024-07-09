@@ -1,0 +1,84 @@
+.history-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Aggiunto per centrare l'immagine e la tabella */
+}
+
+h1 {
+  margin-top: 0;
+  font-weight: bold;
+  color: #333;
+}
+
+.best-result {
+  margin-top: 20px;
+}
+
+.result-info {
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: bold;
+}
+
+td {
+  text-align: left;
+}
+
+td:nth-child(1) {
+  width: 50px;
+  text-align: center;
+}
+
+td:nth-child(2),
+td:nth-child(3) {
+  width: 200px;
+}
+
+td:nth-child(4) {
+  width: 100px;
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+
+tr:hover {
+  background-color: #f2f2f2;
+}
+
+.image-container {
+  position: relative;
+}
+
+.history-logo {
+  max-width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+.table-container {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom'; // Importa Link da react-router-dom
 
 const Home = () => {
     const [data, setData] = useState(null);
@@ -6,7 +7,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:5000//');
+                const response = await fetch('http://127.0.0.1:5000/');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
@@ -63,6 +64,16 @@ const Home = () => {
             <div>
                 <h2>F1 Drivers' World Championship</h2>
                 <img src={data.driver_championship_plot_path} alt="F1 Drivers' World Championship" />
+            </div>
+
+            {/* Aggiungi il pulsante per navigare alla pagina Calendar.js */}
+            <div>
+                <Link to="/calendar">
+                    <button>Calendario</button>
+                </Link>
+                <Link to="/history">
+                    <button>History</button>
+                </Link>
             </div>
         </div>
     );

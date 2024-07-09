@@ -11,5 +11,5 @@ def calendar():
     Returns:
         response (json): A JSON response containing the race calendar.
     """
-    calendar = get_calendar()
+    calendar = get_calendar(2024)
     return jsonify(calendar), 200

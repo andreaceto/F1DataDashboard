@@ -8,6 +8,7 @@ def get_databases():
     Returns:
         db: The MongoDB database object.
     """
+    
     # Get the MongoDB connection string from an environment variable
     mongo_connection_string = os.getenv('MONGO_URI', 'Error in gathering the Connection string')
     
