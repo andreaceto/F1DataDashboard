@@ -1,4 +1,67 @@
-import pandas as pd
+from collections import defaultdict
+
+from data.model import *
+
+def get_championship_data(year):
+    """
+    Retrieves race, result, sprint result, driver, and team data for the specified year.
+
+    Args:
+        year (int): The year for which to retrieve the data.
+
+    Returns:
+        tuple: A tuple containing the following elements:
+            - races (list): A list of race documents from the 'races' collection, including 'raceId', 'round', and 'name'.
+            - results (list): A list of result documents from the 'results' collection, including 'raceId', 'driverId', 'positionOrder', 'points', and 'constructorId'.
+            - sprint_results (list): A list of sprint result documents from the 'sprint_results' collection, including 'raceId', 'driverId', 'positionOrder', 'points', and 'constructorId'.
+            - drivers (list): A list of driver documents from the 'drivers' collection, including 'driverId', 'forename', 'surname', and 'nationality'.
+            - constructors (list): A list of constructor documents from the 'constructors' collection, including 'constructorId' and 'name'.
+    """
+    # Query to get race data for the specified year
+    races = list(Races.collection.find({'year': year}, {'name': 1, 'raceId': 1, 'round': 1, '_id': 0}).sort('round'))
+    # Extract race IDs from results
+    race_ids = [race['raceId'] for race in races]
+
+    # Query to get race results
+    results = list(Results.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
+    sprint_results = list(SprintResults.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
+    combined_results = results + sprint_results
+    
+    # Filter races to only include those that have results
+    completed_race_ids = set(result['raceId'] for result in combined_results)
+    races = [race for race in races if race['raceId'] in completed_race_ids]
+    
+    # Extract driver IDs from results
+    driver_ids = list(set(result['driverId'] for result in combined_results))
+    # Query to get driver names for the relevant driver IDs
+    drivers = list(Drivers.collection.find({'driverId': {'$in': driver_ids}}, {'driverId': 1, 'forename': 1, 'surname': 1, 'nationality': 1, '_id': 0}))
+
+    # Extract team IDs from combined results
+    constructor_ids = list(set(result['constructorId'] for result in combined_results))
+    # Query to get team names for the relevant team IDs
+    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'constructorId': 1, 'name': 1, '_id': 0}))
+    
+    return races, results, sprint_results, drivers, constructors
+
+def generate_team_driver_map(results):
+    """
+    Generates a dictionary mapping constructorId to a list of driverIds from the results.
+
+    Args:
+        results (list): A list of result documents, each containing 'constructorId' and 'driverId'.
+
+    Returns:
+        dict: A dictionary where keys are constructorIds and values are lists of driverIds.
+    """
+    team_driver_map = defaultdict(list)
+    
+    for result in results:
+        constructor_id = result['constructorId']
+        driver_id = result['driverId']
+        if driver_id not in team_driver_map[constructor_id]:
+            team_driver_map[constructor_id].append(driver_id)
+    
+    return dict(team_driver_map)
 
 TEAM_C = {
 # ConstructorId : Color Hex Code

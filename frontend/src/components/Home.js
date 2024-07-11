@@ -66,10 +66,13 @@ const Home = () => {
                 <img src={data.driver_championship_plot_path} alt="F1 Drivers' World Championship" />
             </div>
 
-            {/* Aggiungi il pulsante per navigare alla pagina Calendar.js */}
+            
             <div>
+                <Link to="/teams">
+                    <button>Teams</button>
+                </Link>
                 <Link to="/calendar">
-                    <button>Calendario</button>
+                    <button>Calendar</button>
                 </Link>
                 <Link to="/history">
                     <button>History</button>
