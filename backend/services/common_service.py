@@ -39,7 +39,7 @@ def get_championship_data(year):
     # Extract team IDs from combined results
     constructor_ids = list(set(result['constructorId'] for result in combined_results))
     # Query to get team names for the relevant team IDs
-    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'constructorId': 1, 'name': 1, '_id': 0}))
+    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'constructorId': 1, 'name': 1, 'nationality':1, '_id': 0}))
     
     return races, results, sprint_results, drivers, constructors
 
