@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [data, setData] = useState(null);
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -106,6 +107,9 @@ const Home = () => {
                 </Link>
                 <Link to="/calendar">
                     <button>Calendar</button>
+                </Link>
+                <Link to={`/racestats/${currentYear}/1`}>
+                    <button>Races</button>
                 </Link>
                 <Link to="/history">
                     <button>History</button>

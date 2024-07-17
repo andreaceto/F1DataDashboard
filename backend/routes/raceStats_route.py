@@ -1,25 +1,34 @@
 from flask import Blueprint, jsonify, request
-from services.raceStats_service import get_race_stats
+from services.raceStats_service import get_race_data, get_calendar
 
 race_stats_bp = Blueprint('race_stats', __name__)
 
-@race_stats_bp.route('/raceStats', methods=['GET'])
-def race_stats():
+@race_stats_bp.route('/racestats/calendar/<int:year>', methods=['GET'])
+def calendar(year):
     """
-    Route to get race statistics for a specific race.
+    Route to get the calendar for the specified season year.
     
-    Query Parameters:
-        race_id (str): The ID of the race.
+    Args:
+        year (int): The year of the season.
+
+    Returns:
+        response (json): A JSON response containing the race calendar.
+    """
+    data = get_calendar(year)
+    return jsonify(data)
+
+@race_stats_bp.route('/racestats/race/<int:year>/<int:round>', methods=['GET'])
+def race_data(year, round):
+    """
+    Route to get data for a specific race round in a specified year.
+    
+    Args:
+        year (int): The year of the season.
+        round (int): The round number of the race.
     
     Returns:
-        response (json): A JSON response containing race statistics or an error message.
+        response (json): A JSON response containing the race data.
     """
-    race_id = request.args.get('race_id')
-    if not race_id:
-        return jsonify({"error": "Race ID not provided"}), 400
+    data = get_race_data(year, round)
+    return jsonify(data)
 
-    stats = get_race_stats(race_id)
-    if not stats:
-        return jsonify({"error": "Race not found"}), 404
-
-    return jsonify(stats), 200

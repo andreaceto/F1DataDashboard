@@ -1,0 +1,177 @@
+body {
+    background-color: #000000;
+    color: #FFFFFF;
+    font-family: 'Poppins', sans-serif;
+}
+
+.race-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.race-bar {
+    display: flex;
+    overflow: hidden;
+    width: 80%;
+    justify-content: center;
+    background-color: #1E1E1E;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.race-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s;
+    width: 150px; /* Fixed width to avoid resizing issues */
+    box-sizing: border-box;
+    border: 1px solid #3E3E3E; /* Gray border for separation */
+    border-radius: 5px;
+}
+
+.race-item.selected {
+    transform: scale(1.1);
+    border: 2px solid #FF0000;
+    border-radius: 5px;
+    width: 250px; /* Larger width for selected race */
+    background-color: darkred;
+}
+
+.race-flag {
+    width: 50px;
+    height: 30px;
+    margin-bottom: 5px;
+}
+
+.race-info {
+    width: 100%;
+    text-align: center;
+}
+
+.race-name {
+    font-size: 1rem;
+    font-weight: 900;
+    font-style: italic;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.race-date, .session-details {
+    font-size: 0.6rem;
+    font-weight: bold;
+    font-style: italic;
+    color: #9E9E9F;
+}
+
+.session-details {
+    font-size: 0.6rem;
+    text-align: left;
+    color: #FFFFFF;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.session-details .event {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 2px 0;
+}
+
+.session-details .event-type {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.session-details .event-date {
+    color: #9E9E9F;
+    font-style: italic;
+    margin-left: auto;
+}
+
+.session-details .event-time {
+    color: #FFFFFF;
+    margin-left: 0.3rem;
+}
+
+.navigation-buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 83%;
+    margin-top: 10px;
+}
+
+.navigation-buttons button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: #FF0000;
+    font-size: 1.2rem;
+}
+
+.nav-flag {
+    width: 30px;
+    height: 20px;
+    margin: 0 5px;
+}
+
+.race-card {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #1E1E1E;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    margin: 0 auto;
+}
+
+.circuit-image {
+    width: 75%;
+    border-radius: 5px;
+    margin-right: 20px;
+}
+
+.circuit-info {
+    flex: 1;
+    color: #FFFFFF;
+}
+
+.circuit-info h2 {
+    font-size: 1.5rem;
+    color: #FF0000;
+}
+
+.circuit-info-heading {
+    color: #9E9E9F;
+    font-style: italic;
+    font-size: 1rem;
+    margin: 0;
+
+}
+
+.circuit-info-data {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0;
+    width: fit-content;
+    display: flex;
+}
+
+.circuit-info-unit {
+    color: #9E9E9F;
+    font-style: italic;
+    font-size: 0.6rem;
+    margin: 0;
+    text-align: center;
+}
