@@ -171,30 +171,47 @@ const RaceStats = () => {
                     </div>
                 )}
             </div>
-
             {raceData && (
-                <div className="race-card">
-                    <img
-                        src={raceData.additional_info.img_src}
-                        alt={raceData.circuit.name}
-                        className="circuit-image"
-                    />
-                    <div className="circuit-info">
-                        <h2>{raceData.circuit.name}</h2>
-                        <p className='circuit-info-heading'>Location</p>
-                        <p className='circuit-info-data'>{raceData.circuit.location}, {raceData.circuit.country}</p>
-                        <p className='circuit-info-heading'>First Grand Prix</p>
-                        <p className='circuit-info-data'>{raceData.additional_info.first_gp}</p>
-                        <p className='circuit-info-heading'>Number of Laps</p>
-                        <p className='circuit-info-data'>{raceData.additional_info.laps}</p>
-                        <p className='circuit-info-heading'>Circuit Length</p>
-                        <p className='circuit-info-data'>{raceData.additional_info.length} <p className='circuit-info-unit'>km</p></p>
-                        <p className='circuit-info-heading'>Race Distance</p>
-                        <p className='circuit-info-data'>{raceData.additional_info.race_distance} <p className='circuit-info-unit'>km</p></p>
-                        <p className='circuit-info-heading'>Lap Record</p>
-                        <p className='circuit-info-data'>{raceData.additional_info.lap_record} <p className='circuit-info-unit'>{raceData.additional_info.record_holder}</p></p>
+                <div>
+                    <div className='circuit-name-container'>
+                        <h2 className='circuit-name'>{raceData.circuit.name}</h2>
+                    </div>
+                    <div className="race-card">
+                        <img
+                            src={raceData.additional_info.img_src}
+                            alt={raceData.circuit.name}
+                            className="circuit-image"
+                        />
+                        <div className="circuit-info">
+                            
+                            <div className='circuit-info-heading'>Location
+                                <div className='circuit-info-data'>{raceData.circuit.location}, {raceData.circuit.country}</div>
+                            </div>
+                            <div className='circuit-info-heading'>First Grand Prix
+                                <div className='circuit-info-data'>{raceData.additional_info.first_gp}</div>
+                            </div>
+                            <div className='circuit-info-heading'>Number of Laps
+                                <div className='circuit-info-data'>{raceData.additional_info.laps}</div>
+                            </div>
+                            <div className='circuit-info-heading'>Circuit Length
+                                <div className='circuit-info-data'>{raceData.additional_info.length}
+                                    <div className='circuit-info-unit'>km</div>
+                                </div>  
+                            </div>
+                            <div className='circuit-info-heading'>Race Distance
+                                <div className='circuit-info-data'>{raceData.additional_info.race_distance}
+                                    <div className='circuit-info-unit'>km</div>
+                                </div>
+                            </div>
+                            <div className='circuit-info-heading'>Lap Record
+                                <div className='circuit-info-data'>{raceData.additional_info.lap_record}
+                                    <div className='circuit-info-unit'>{raceData.additional_info.record_holder}</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                
             )}
         </div>
     );

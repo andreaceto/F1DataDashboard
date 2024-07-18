@@ -14,7 +14,7 @@ body {
 .race-bar {
     display: flex;
     overflow: hidden;
-    width: 80%;
+    width: 70%;
     justify-content: center;
     background-color: #1E1E1E;
     padding: 10px;
@@ -48,6 +48,7 @@ body {
     width: 50px;
     height: 30px;
     margin-bottom: 5px;
+    border-radius: 0.2rem;
 }
 
 .race-info {
@@ -105,7 +106,7 @@ body {
 .navigation-buttons {
     display: flex;
     justify-content: space-between;
-    width: 83%;
+    width: 73%;
     margin-top: 10px;
 }
 
@@ -123,6 +124,7 @@ body {
     width: 30px;
     height: 20px;
     margin: 0 5px;
+    border-radius: 0.2rem;
 }
 
 .race-card {
@@ -136,42 +138,56 @@ body {
     margin: 0 auto;
 }
 
+.circuit-name-container {
+    margin: 2rem 0rem 0rem 0rem;
+    display: flex;
+    justify-content: left;
+    padding: 0px 0px 5px 40px;
+}
+
+.circuit-name {
+    color: #E10600;
+    margin: 0;
+    padding: 0rem .5rem 0rem 0rem;
+    font-size: 1.8rem;
+    font-weight: 900;
+    letter-spacing: -.1rem;
+    font-style: italic;
+    border-bottom: .4rem solid red;
+    border-right: .4rem solid red;
+    border-radius: 0.3rem;
+    box-shadow: 0.2rem 0.2rem salmon;
+}
+
 .circuit-image {
     width: 75%;
     border-radius: 5px;
     margin-right: 20px;
 }
 
-.circuit-info {
-    flex: 1;
-    color: #FFFFFF;
-}
-
-.circuit-info h2 {
-    font-size: 1.5rem;
-    color: #FF0000;
-}
-
 .circuit-info-heading {
     color: #9E9E9F;
     font-style: italic;
     font-size: 1rem;
-    margin: 0;
-
+    margin: 0rem 0rem 0.8rem 0rem;
+    border-bottom: 0.1rem solid darkgray;
+    border-right: 0.1rem solid darkgray;
+    border-radius: 0.3rem;
+    box-shadow: 0.2rem 0.2rem #3E3E3E;
 }
 
 .circuit-info-data {
+    color: white;
     font-size: 1.5rem;
     font-weight: 800;
     margin: 0;
-    width: fit-content;
     display: flex;
+    align-items: baseline;
 }
 
 .circuit-info-unit {
     color: #9E9E9F;
     font-style: italic;
-    font-size: 0.6rem;
-    margin: 0;
-    text-align: center;
+    font-size: 0.8rem;
+    margin: 0rem 0rem 0rem 0.2rem;
 }

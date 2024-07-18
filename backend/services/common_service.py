@@ -182,7 +182,7 @@ CIRCUITS_INFO = {
         'length': '5.412',
         'race_distance': '308.238',
         'lap_record': '1:31.447',
-        'record_holder': 'Pedro de la Rosa (2005)'
+        'record_holder': 'P. de la Rosa (2005)'
     },
     # Saudi Arabian Grand Prix
     77: {
@@ -192,7 +192,7 @@ CIRCUITS_INFO = {
         'length': '6.174',
         'race_distance': '308.45',
         'lap_record': '1:30.734',
-        'record_holder': 'Lewis Hamilton (2021)'
+        'record_holder': 'L. Hamilton (2021)'
     },
     # Australian Grand Prix
     1: {
@@ -202,7 +202,7 @@ CIRCUITS_INFO = {
         'length': '5.278',
         'race_distance': '306.124',
         'lap_record': '1:19.813',
-        'record_holder': 'Charles Leclerc (2024)'
+        'record_holder': 'C. Leclerc (2024)'
     },
     # Japanese Grand Prix
     22: {
@@ -212,7 +212,7 @@ CIRCUITS_INFO = {
         'length': '5.807',
         'race_distance': '307.471',
         'lap_record': '1:30.983',
-        'record_holder': 'Lewis Hamilton (2019)'
+        'record_holder': 'L. Hamilton (2019)'
     },
     # Chinese Grand Prix
     17: {
@@ -222,7 +222,7 @@ CIRCUITS_INFO = {
         'length': '5.451',
         'race_distance': '305.066',
         'lap_record': '1:32.238',
-        'record_holder': 'Michael Schumacher (2004)'
+        'record_holder': 'M. Schumacher (2004)'
     },
     # Miami Grand Prix
     79: {
@@ -232,7 +232,7 @@ CIRCUITS_INFO = {
         'length': '5.412',
         'race_distance': '308.326',
         'lap_record': '1:29.708',
-        'record_holder': 'Max Verstappen (2023)'
+        'record_holder': 'M. Verstappen (2023)'
     },
     # Emilia Romagna Grand Prix
     21: {
@@ -242,7 +242,7 @@ CIRCUITS_INFO = {
         'length': '4.909',
         'race_distance': '309.049',
         'lap_record': '1:15.484',
-        'record_holder': 'Lewis Hamilton (2020)'
+        'record_holder': 'L. Hamilton (2020)'
     },
     # Monaco Grand Prix
     6: {
@@ -252,7 +252,7 @@ CIRCUITS_INFO = {
         'length': '3.337',
         'race_distance': '260.286',
         'lap_record': '1:12.909',
-        'record_holder': 'Lewis Hamilton (2021)'
+        'record_holder': 'L. Hamilton (2021)'
     },
     # Canadian Grand Prix
     7: {
@@ -262,7 +262,7 @@ CIRCUITS_INFO = {
         'length': '4.361',
         'race_distance': '305.27',
         'lap_record': '1:13.078',
-        'record_holder': 'Valtteri Bottas (2019)'
+        'record_holder': 'V. Bottas (2019)'
     },
     # Spanish Grand Prix
     4: {
@@ -272,7 +272,7 @@ CIRCUITS_INFO = {
         'length': '4.657',
         'race_distance': '307.236',
         'lap_record': '1:16.330',
-        'record_holder': 'Max Verstappen (2023)'
+        'record_holder': 'M. Verstappen (2023)'
     },
     # Austrian Grand Prix
     70: {
@@ -282,7 +282,7 @@ CIRCUITS_INFO = {
         'length': '4.318',
         'race_distance': '306.452',
         'lap_record': '1:05.619',
-        'record_holder': 'Carlos Sainz (2020)'
+        'record_holder': 'C. Sainz (2020)'
     },
     # British Grand Prix
     9: {
@@ -292,7 +292,7 @@ CIRCUITS_INFO = {
         'length': '5.891',
         'race_distance': '306.198',
         'lap_record': '1:27.097',
-        'record_holder': 'Max Verstappen (2020)'
+        'record_holder': 'M. Verstappen (2020)'
     },
     # Hungarian Grand Prix
     11: {
@@ -302,7 +302,7 @@ CIRCUITS_INFO = {
         'length': '4.381',
         'race_distance': '306.63',
         'lap_record': '1:16.627',
-        'record_holder': 'Lewis Hamilton (2020)'
+        'record_holder': 'L. Hamilton (2020)'
     },
     # Belgian Grand Prix
     13: {
@@ -312,7 +312,7 @@ CIRCUITS_INFO = {
         'length': '7.004',
         'race_distance': '308.052',
         'lap_record': '1:46.286',
-        'record_holder': 'Valtteri Bottas (2018)'
+        'record_holder': 'V. Bottas (2018)'
     },
     # Dutch Grand Prix
     39: {
@@ -322,7 +322,7 @@ CIRCUITS_INFO = {
         'length': '4.259',
         'race_distance': '306.587',
         'lap_record': '1:11.097',
-        'record_holder': 'Lewis Hamilton (2021)'
+        'record_holder': 'L. Hamilton (2021)'
     },
     # Italian Grand Prix
     14: {
@@ -332,7 +332,7 @@ CIRCUITS_INFO = {
         'length': '5.793',
         'race_distance': '306.72',
         'lap_record': '1:21.046',
-        'record_holder': 'Rubens Barrichello (2004)'
+        'record_holder': 'R. Barrichello (2004)'
     },
     # Azerbaijan Grand Prix
     73: {
@@ -342,7 +342,7 @@ CIRCUITS_INFO = {
         'length': '6.003',
         'race_distance': '306.049',
         'lap_record': '1:43.009',
-        'record_holder': 'Charles Leclerc (2019)'
+        'record_holder': 'C. Leclerc (2019)'
     },
     # Singapore Grand Prix
     15: {
@@ -352,7 +352,7 @@ CIRCUITS_INFO = {
         'length': '4.94',
         'race_distance': '306.143',
         'lap_record': '1:35.867',
-        'record_holder': 'Lewis Hamilton (2023)'
+        'record_holder': 'L. Hamilton (2023)'
     },
     # United States Grand Prix
     69: {
@@ -362,7 +362,7 @@ CIRCUITS_INFO = {
         'length': '5.513',
         'race_distance': '308.405',
         'lap_record': '1:36.169',
-        'record_holder': 'Charles Leclerc (2019)'
+        'record_holder': 'C. Leclerc (2019)'
     },
     # Mexico City Grand Prix
     32: {
@@ -372,7 +372,7 @@ CIRCUITS_INFO = {
         'length': '4.304',
         'race_distance': '305.354',
         'lap_record': '1:17.774',
-        'record_holder': 'Valtteri Bottas (2021)'
+        'record_holder': 'V. Bottas (2021)'
     },
     # São Paulo Grand Prix
     18: {
@@ -382,7 +382,7 @@ CIRCUITS_INFO = {
         'length': '4.309',
         'race_distance': '305.879',
         'lap_record': '1:10.540',
-        'record_holder': 'Valtteri Bottas (2018)'
+        'record_holder': 'V. Bottas (2018)'
     },
     # Las Vegas Grand Prix
     80: {
@@ -392,7 +392,7 @@ CIRCUITS_INFO = {
         'length': '6.201',
         'race_distance': '309.958',
         'lap_record': '1:35.490',
-        'record_holder': 'Oscar Piastri (2023)'
+        'record_holder': 'O. Piastri (2023)'
     },
     # Qatar Grand Prix
     78: {
@@ -402,7 +402,7 @@ CIRCUITS_INFO = {
         'length': '5.419',
         'race_distance': '308.611',
         'lap_record': '1:24.319',
-        'record_holder': 'Max Verstappen (2023)'
+        'record_holder': 'M. Verstappen (2023)'
     },
     # Abu Dhabi Grand Prix
     24: {
@@ -412,6 +412,6 @@ CIRCUITS_INFO = {
         'length': '5.281',
         'race_distance': '306.183',
         'lap_record': '1:26.103',
-        'record_holder': 'Max Verstappen (2021)'
+        'record_holder': 'M. Verstappen (2021)'
     },
 }
