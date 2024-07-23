@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
 import '../styles/Calendar.css';
-import calendarLogo from './calendar_logo.png'; // Importa l'immagine correttamente
+import React, { useEffect, useState } from 'react';
+import Header from './Header.js';
+import Footer from './Footer.js';
 
 const Calendar = () => {
   const [calendar, setCalendar] = useState([]);
@@ -20,16 +21,24 @@ const Calendar = () => {
     };
 
     fetchCalendar();
-  }, []);
+
+    // Cambia il colore di sfondo del body quando il componente è montato
+    document.body.style.backgroundColor = '#00010c';
+
+    // Pulisci l'effetto quando il componente viene smontato
+    return () => {
+      document.body.style.backgroundColor = '';
+    };
+  }, []); // Dipendenza vuota per eseguire solo una volta all'avvio
 
   const formatDate = (dateString) => {
     const [start, end] = dateString.split(' - ');
     const startDate = new Date(start);
     const endDate = new Date(end);
     const startDay = startDate.getDate();
-    const startMonth = startDate.toLocaleString('it-IT', { month: 'long' });
+    const startMonth = startDate.toLocaleString('en-EN', { month: 'long' });
     const endDay = endDate.getDate();
-    const endMonth = endDate.toLocaleString('it-IT', { month: 'long' });
+    const endMonth = endDate.toLocaleString('en-EN', { month: 'long' });
 
     const capitalizeFirstLetter = (string) => {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -49,24 +58,28 @@ const Calendar = () => {
   };
 
   return (
+    <>
+    <Header /> {/* Importa ed usa il componente Header */}
     <div className="calendar-container">
-      <img src={calendarLogo} alt="Calendar Logo" className="calendar-logo"/>
+      <img src={`${process.env.PUBLIC_URL}/calendar/calendar_logo.png`} alt="Calendar Logo" className="calendar-logo"/>
       <div className="calendar-grid">
         {calendar.map((race, index) => (
           <a href={`#race-${index}`} className="calendar-item" key={index}>
-            <div className={`round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
-            <div className="race-info">
-              <div className="race-flag">
+            <div className={`cal-round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
+            <div className="cal-race-info">
+              <div className="cal-race-flag">
                 <img src={race.flag} alt={`${race.location} flag`} />
               </div>
-              <div className="race-location">{race.location}</div>
-              <div className="race-name">{race.name}</div>
-              <div className="race-date">{formatDate(race.date)}</div>
+              <div className="cal-race-location">{race.location}</div>
+              <div className="cal-race-name">{race.name}</div>
+              <div className="cal-race-date">{formatDate(race.date)}</div>
             </div>
           </a>
         ))}
       </div>
     </div>
+    <Footer /> {/* Importa ed usa il componente Footer */}
+    </>
   );
 };
 

@@ -1,84 +1,432 @@
-.history-container {
-  max-width: 800px;
-  margin: 40px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  text-align: center; /* Aggiunto per centrare l'immagine e la tabella */
+/* Stili già presenti */
+
+.header-image-container {
+  font-family: Arial, sans-serif;
+  padding: 1vw; /* Ridotto il padding per mantenere il contenitore compatto */
+  text-align: center;
+  color: #ffffff;
+  width: 60%; /* Ridotto la larghezza del contenitore */
+  max-width: 600px; /* Ridotto la larghezza massima del contenitore */
+  height: auto; /* Altezza del container in base al contenuto */
+  margin: 0 auto; /* Centramento orizzontale */
 }
 
-h1 {
-  margin-top: 0;
-  font-weight: bold;
-  color: #333;
+.header-image {
+  width: 80%; /* Ridotto la larghezza dell'immagine rispetto al contenitore */
+  max-width: 80%; /* Assicurati che l'immagine non superi l'80% della larghezza del contenitore */
+  height: auto; /* Mantieni l'aspetto proporzionale */
+  margin-bottom: 1rem; /* Margine inferiore per separare dal testo sottostante */
 }
 
-.best-result {
+.grid-section {
+  position: relative;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
   margin-top: 20px;
+  position: relative;
+  grid-auto-rows: 1fr; /* Uniforma l'altezza delle righe */
 }
 
-.result-info {
-  margin-top: 10px;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-th,
-td {
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background-color: #f0f0f0;
-  font-weight: bold;
-}
-
-td {
-  text-align: left;
-}
-
-td:nth-child(1) {
-  width: 50px;
-  text-align: center;
-}
-
-td:nth-child(2),
-td:nth-child(3) {
-  width: 200px;
-}
-
-td:nth-child(4) {
-  width: 100px;
-  text-align: center;
-}
-
-tr:nth-child(even) {
-  background-color: #f7f7f7;
-}
-
-tr:hover {
-  background-color: #f2f2f2;
+.additional-grid {
+  margin-top: 40px;
+  position: relative;
 }
 
 .image-container {
   position: relative;
-}
-
-.history-logo {
-  max-width: 100%;
-  height: auto;
+  overflow: visible;
+  border-radius: 10px;
+  display: inline-block;
   cursor: pointer;
 }
 
-.table-container {
-  margin-top: 20px;
+.history-logo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover; /* Assicura che le immagini si adattino correttamente */
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
 }
 
-.hidden {
-  display: none;
+.image-container:hover .history-logo {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.image-title {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navigation-buttons {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s;
+}
+
+.navigation-buttons button {
+  background-color: transparent;
+  color: rgb(226, 48, 48);
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.navigation-buttons.left {
+  left: -60px; /* Spazio per la dimensione delle frecce */
+}
+
+.navigation-buttons.right {
+  right: -60px; /* Spazio per la dimensione delle frecce */
+}
+
+.navigation-buttons:hover {
+  transform: scale(2.5);
+}
+
+.table-container {
+  margin-top: 40px;
+}
+
+.specific-page-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1f1f1f; /* Sfondo scuro uniforme per la tabella */
+  border-radius: 10px; /* Angoli arrotondati per la tabella */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombra leggera per separare la tabella dallo sfondo */
+}
+
+.specific-page-table, .specific-page-table th, .specific-page-table td {
+  border: 1px solid #333; /* Bordo scuro e sottile per le celle */
+}
+
+.specific-page-table th, .specific-page-table td {
+  padding: 12px;
+  text-align: center; /* Centra il testo all'interno delle celle */
+  vertical-align: middle; /* Centra verticalmente il contenuto delle celle */
+  font-size: 0.9rem; /* Font size leggermente aumentato per una migliore leggibilità */
+  color: #e0e0e0; /* Colore del testo chiaro */
+}
+
+.specific-page-table th {
+  background: #333; /* Colore uniforme per tutte le intestazioni */
+  color: #f4f4f4; /* Testo chiaro per contrastare con lo sfondo */
+}
+
+.specific-page-table tr:nth-child(even) {
+  background: #2a2a2a; /* Colore scuro per righe pari */
+}
+
+.specific-page-table tr:nth-child(odd) {
+  background: #1f1f1f; /* Colore base per righe dispari */
+}
+
+.grid-title {
+  color: #f4f4f4;
+  font-size: 1.5rem; /* Dimensione del font per titoli più grande */
+  border-bottom: 2px solid #333; /* Sottolineatura per evidenziare i titoli */
+  padding-bottom: 10px; /* Padding inferiore per separare il titolo dal contenuto sottostante */
+  margin-bottom: 20px; /* Margine inferiore per spazio tra il titolo e il contenuto sottostante */
+}
+
+.main-content {
+  margin-top: 60px; /* Altezza dell'header */
+  margin-bottom: 80px; /* Spazio per il footer */
+  width: 100%; /* Assicurati che il contenitore principale occupi tutta la larghezza */
+  box-sizing: border-box; /* Include padding e border nella larghezza totale */
+  padding: 0 20px; /* Aggiungi padding alla main-content per lo spazio del footer */
+}
+
+/* Stili specifici per ogni tabella */
+
+.world-championships-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.world-championships-table th, 
+.world-championships-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.world-championships-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.wins-table th, 
+.wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.podiums-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.podiums-table th, 
+.podiums-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.podiums-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.points-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.points-table th, 
+.points-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.points-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.pole-positions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.pole-positions-table th, 
+.pole-positions-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.pole-positions-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.constructors-championships-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.constructors-championships-table th, 
+.constructors-championships-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.constructors-championships-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.constructors-wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.constructors-wins-table th, 
+.constructors-wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.constructors-wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+
+.constructors-podiums-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.constructors-podiums-table th, 
+.constructors-podiums-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.constructors-podiums-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+
+
+.constructors-starts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  
+}
+
+.constructors-starts-table th, 
+.constructors-starts-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.constructors-starts-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.constructors-fastest-laps-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  
+}
+
+.constructors-fastest-laps-table th, 
+.constructors-fastest-laps-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.constructors-fastest-laps-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+/* Stili per la tabella MostCircuitsGPTable */
+.most-circuits-gp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.most-circuits-gp-table th,
+.most-circuits-gp-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.most-circuits-gp-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+/* Stili per la tabella MostNationsWinsTable */
+.most-nations-wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.most-nations-wins-table th,
+.most-nations-wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.most-nations-wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+/* Stili per la tabella MostNationsDriversTable */
+.most-nations-drivers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.most-nations-drivers-table th,
+.most-nations-drivers-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.most-nations-drivers-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
 }

@@ -1,0 +1,91 @@
+.footer {
+  display: flex;
+  justify-content: space-between; /* Distribuisce gli elementi uniformemente */
+  align-items: center;
+  padding: 35px; 
+  background-color: #222;
+  color: #fff;
+  width: 100%;
+  box-sizing: border-box;
+  left: 0;
+  z-index: 1000;
+  position: absolute;
+}
+
+.logoFooter {
+  flex: 1; /* Occupa tutto lo spazio possibile a sinistra */
+}
+
+.logoFooter img {
+  height: 30px;
+}
+
+.socialMedia {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1; /* Occupa tutto lo spazio possibile al centro */
+}
+
+.socialMedia a {
+  margin: 0 10px; /* Aggiunge spazio tra le icone dei social media */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Aggiunge una transizione per l'effetto hover */
+}
+
+.socialMedia img {
+  height: 40px; /* Regola la dimensione delle icone dei social media */
+}
+
+.tiktok img {
+  height: 45px;
+}
+
+.snapchat img {
+  height: 42px;
+}
+
+.socialMedia a:hover img {
+  transform: scale(1.2); /* Ingrandisce l'icona al passaggio del mouse */
+  opacity: 0.8; /* Riduce leggermente l'opacità al passaggio del mouse */
+}
+
+.copyright {
+  flex: 1; /* Occupa tutto lo spazio possibile a destra */
+  text-align: right; /* Allinea il testo a destra */
+  font-size: 14px;
+}
+
+/* Media queries per rendere il footer responsive */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column; /* Cambia la direzione dei flex items a colonna */
+    padding: 20px;
+  }
+
+  .logoFooter, .socialMedia, .copyright {
+    flex: none; /* Rimuove il flex: 1 */
+    width: 100%; /* Imposta la larghezza al 100% */
+    text-align: center; /* Centra il testo e le immagini */
+    margin: 10px 0; /* Aggiunge un margine tra gli elementi */
+  }
+
+  .socialMedia {
+    justify-content: center; /* Mantiene le icone dei social media centrate */
+  }
+
+  .socialMedia img {
+    height: 30px; /* Riduce la dimensione delle icone dei social media per schermi piccoli */
+  }
+
+  .tiktok img {
+    height: 35px;
+  }
+
+  .snapchat img {
+    height: 32px;
+  }
+
+  .copyright {
+    text-align: center; /* Centra il testo del copyright */
+  }
+}

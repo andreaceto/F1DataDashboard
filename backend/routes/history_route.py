@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from services.history_service import get_history
+from services.history_service import generate_history_data
 
 history_bp = Blueprint('history', __name__)
 
@@ -11,5 +11,5 @@ def history():
     Returns:
         response (json): A JSON response containing historical data.
     """
-    history = get_history()
+    history = generate_history_data()
     return jsonify(history), 200

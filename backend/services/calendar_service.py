@@ -70,7 +70,7 @@ def get_calendar(year):
             'name': race['name'].replace(' Grand Prix', ' GP'),
             'date': f"{race['fp1_date']} - {race['date']}",
             'location': location,
-            'flag': f"/flags/{flag_filename}"  # Percorso dell'immagine della bandiera nella cartella 'public'
+            'flag': f"/calendar/{flag_filename}"  # Percorso dell'immagine della bandiera nella cartella 'public'
         }
         race_periods.append(race_dict)
     
