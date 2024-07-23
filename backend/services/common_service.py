@@ -63,6 +63,58 @@ def generate_team_driver_map(results):
     
     return dict(team_driver_map)
 
+def get_driver_name(driver_id):
+    """
+    Retrieves the full name of the driver given the driver ID.
+
+    Args:
+        driver_id (int): The driver ID.
+
+    Returns:
+        str: Full name of the driver.
+    """
+    driver = Drivers.collection.find_one({'driverId': driver_id}, {'forename': 1, 'surname': 1, '_id': 0})
+    if driver:
+        return f"{driver['forename']} {driver['surname']}"
+    return "Unknown Driver"
+
+def get_team_name(constructor_id):
+    """
+    Retrieves the name of the team given the constructor ID.
+
+    Args:
+        constructor_id (int): The constructor ID.
+
+    Returns:
+        str: Name of the team.
+    """
+    team = Constructors.collection.find_one({'constructorId': constructor_id}, {'name': 1, '_id': 0})
+    if team:
+        return team['name']
+    return "Unknown Team"
+
+def get_sprint_race_ids(year):
+    """
+    Retrieves a list of race IDs that have a sprint race for the specified year.
+
+    Args:
+        year (int): The year for which to retrieve the race IDs.
+
+    Returns:
+        list: A list of race IDs with sprint races.
+    """
+
+    query = {
+        'year': year,
+        'sprint_date': {'$ne': '\\N'}
+    }
+    projection = {'raceId': 1, '_id': 0}
+
+    races = list(Races.collection.find(query, projection))
+    sprint_race_ids = [race['raceId'] for race in races]
+
+    return sprint_race_ids
+
 TEAM_C = {
 # ConstructorId : Color Hex Code
     9: "#3671C6", # Red Bull
@@ -169,6 +221,96 @@ LINESTYLES = {
     "solid": '-',
     "dashdot": '-.',
     "dashed": '--'
+}
+
+DRIVER_PIC = {
+# DriverId : ProfilePic.png
+
+                    # Red Bull
+    830: "Verstappen.png", # Verstappen 
+    815: "Perez.png", # Perez
+
+                    # Mercedes
+    1: "Hamilton.png", # Hamilton
+    847: "Russell.png", # Russell
+
+                    # Ferrari
+    844: "Leclerc.png", # Leclerc
+    832: "Sainz.png", # Sainz
+    860: "Undefined.png", # Bearman
+
+                    # McLaren
+    846: "Norris.png", # Norris
+    857: "Piastri.png", # Piastri
+
+                    # Aston Martin
+    4: "Alonso.png", # Alonso
+    840: "Stroll.png", # Stroll
+
+                    # Alpine
+    842: "Gasly.png", # Gasly
+    839: "Ocon.png", # Ocon
+
+                    # Williams
+    848: "Albon.png", # Albon
+    858: "Sargeant.png", # Sargeant
+
+                    # Racing Bulls
+    852: "Tsunoda.png", # Tsunoda
+    817: "Ricciardo.png", # Ricciardo
+
+                    # Sauber
+    822: "Bottas.png", # Bottas
+    855: "Zhou.png", # Zhou
+
+                    # Haas
+    807: "Hulkenberg.png", # Hulkenberg
+    825: "Magnussen.png", # Magnussen
+}
+
+NATIONALITY_FLAGS = {
+# DriverId : Flag.png
+
+                    # Red Bull
+    830: "netherlands.png", # Verstappen 
+    815: "mexico.png", # Perez
+
+                    # Mercedes
+    1: "uk.png", # Hamilton
+    847: "uk.png", # Russell
+
+                    # Ferrari
+    844: "monaco.png", # Leclerc
+    832: "spain.png", # Sainz
+    860: "uk.png", # Bearman
+
+                    # McLaren
+    846: "uk.png", # Norris
+    857: "australia.png", # Piastri
+
+                    # Aston Martin
+    4: "spain.png", # Alonso
+    840: "canada.png", # Stroll
+
+                    # Alpine
+    842: "france.png", # Gasly
+    839: "france.png", # Ocon
+
+                    # Williams
+    848: "thai.png", # Albon
+    858: "usa.png", # Sargeant
+
+                    # Racing Bulls
+    852: "japan.png", # Tsunoda
+    817: "australia.png", # Ricciardo
+
+                    # Sauber
+    822: "finland.png", # Bottas
+    855: "china.png", # Zhou
+
+                    # Haas
+    807: "german.png", # Hulkenberg
+    825: "denmark.png", # Magnussen
 }
 
 CIRCUITS_INFO = {

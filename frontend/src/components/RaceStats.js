@@ -32,6 +32,10 @@ const RaceStats = () => {
     const [calendar, setCalendar] = useState([]);
     const [selectedRound, setSelectedRound] = useState(1);
     const [raceData, setRaceData] = useState(null);
+    const [qualifyingTable, setQualifyingTable] = useState([]);
+    const [raceTable, setRaceTable] = useState([]);
+    const [sprintTable, setSprintTable] = useState([]);
+    const [selectedTable, setSelectedTable] = useState('qualifying'); // 'qualifying', 'race', 'sprint'
     const [year] = useState(new Date().getFullYear());
 
     useEffect(() => {
@@ -63,6 +67,53 @@ const RaceStats = () => {
             fetchRaceData();
         }
     }, [selectedRound, year]);
+
+    const fetchQualifyingTable = async (raceId) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/racestats/qualifying/${raceId}`);
+            const data = await response.json();
+            setQualifyingTable(data);
+        } catch (error) {
+            console.error('Error fetching qualifying table', error);
+        }
+    };
+
+    const fetchRaceTable = async (raceId) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/racestats/race/${raceId}`);
+            const data = await response.json();
+            setRaceTable(data);
+        } catch (error) {
+            console.error('Error fetching race table', error);
+        }
+    };
+
+    const fetchSprintTable = async (raceId) => {
+        try {
+            const response = await fetch(`http://127.0.0.1:5000/racestats/sprint/${raceId}`);
+            const data = await response.json();
+            setSprintTable(data);
+        } catch (error) {
+            console.error('Error fetching sprint table', error);
+        }
+    };
+
+    useEffect(() => {
+        if (raceData) {
+            const currentTime = new Date().getTime();
+            const raceTime = new Date(raceData.race.date + 'T' + raceData.race.time + 'Z').getTime();
+            
+            if (raceTime > currentTime) {
+                return;
+            } else {
+                fetchQualifyingTable(raceData.race.raceId);
+                fetchRaceTable(raceData.race.raceId);
+                if (raceData.sprint_weekend === 'true') {
+                    fetchSprintTable(raceData.race.raceId);
+                }
+            }
+        }
+    }, [raceData]);
 
     const handleNext = () => {
         setSelectedRound((prevRound) => (prevRound % calendar.length) + 1);
@@ -124,9 +175,109 @@ const RaceStats = () => {
     const prevRaceIndex = (selectedRound - 2 + calendar.length) % calendar.length;
     const nextRaceIndex = selectedRound % calendar.length;
 
+    const renderQualiTable = (raceName, table, tableName) => {
+        if (table.length === 0) {
+            return (
+                <div className='countdown-container'>
+                    <div className="countdown">No results are currently available for {raceName} - {tableName} Session</div>
+                </div>
+            )
+        } else {
+            return (
+                <div className="quali-table">
+                    <h3 className='quali-table_header'>{raceName} - Qualifying Result</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Driver</th>
+                                <th>Team</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {table.map((row, index) => (
+                                <tr key={index}>
+                                    <td className='quali-table_pos'>
+                                        <div className='quali-table_pos_container'>
+                                            <div className='quali-table_pos_color' style={{ backgroundColor: row.team_color }}></div>
+                                            <span className='quali-table_pos_text'>{row.position}</span>
+                                        </div>
+                                    </td>
+                                    <td className='quali-table_driver'>
+                                        <div className='quali-table_driver_img'>
+                                            <img className='quali-table_driver_img_profile' src={`/pro_pic/${row.driver_pic}`} alt={`${row.driver_name} pro pic`}></img>
+                                            <img className='quali-table_driver_img_nationality' src={`/flags/${row.driver_nat_flag}`} alt={`${row.driver_name} nationality`}></img>
+                                        </div>
+                                        <div className='quali-table_driver_name'>{row.driver_name}</div>
+                                    </td>
+                                    <td className='quali-table_team'>{row.team_name}</td>
+                                    <td className='quali-table_time'>{row.time}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+    };
+
+    const renderRaceTable = (raceName, table, tableName) => {
+        if (table.length === 0) {
+            return (
+                <div className='countdown-container'>
+                    <div className="countdown">No results are currently available for {raceName} - {tableName} Session</div>
+                </div>
+            )
+        } else {
+            return(
+                <div className="race-table">
+                    <h3 className='race-table_header'>{raceName} - {tableName} Result</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Driver</th>
+                                <th>Team</th>
+                                <th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                            table.map((row, index) => (
+                                <tr key={index}>
+                                    <td className='race-table_pos'>
+                                        <div className='race-table_pos_container'>
+                                            <div className='race-table_pos_color' style={{ backgroundColor: row.team_color }}></div>
+                                            <span className='race-table_pos_text'>{row.position}</span>
+                                        </div>
+                                    </td>
+                                    <td className='race-table_driver'>
+                                        <div className='race-table_driver_img'>
+                                            <img className='race-table_driver_img_profile' src={`/pro_pic/${row.driver_pic}`} alt={`${row.driver_name} pro pic`}></img>
+                                            <img className='race-table_driver_img_nationality' src={`/flags/${row.driver_nat_flag}`} alt={`${row.driver_name} nationality`}></img>
+                                        </div>
+                                        <div className='race-table_driver_name'>{row.driver_name}</div>
+                                        {row.fastest_lap && (
+                                            <span className="fastest-lap-tooltip">
+                                                <img className='tooltip-icon' src="/fastest-lap.png" alt="Fastest Lap" />
+                                                <span className="tooltip-text">{row.fastest_lap}</span>
+                                            </span>
+                                        )}
+                                    </td>
+                                    <td className='race-table_team'>{row.team_name}</td>
+                                    <td className='race-table_time'>{row.time}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )
+        }
+    };
+
     return (
         <div className='main-container'>
-            <h1>Race Stats</h1>
             <div className="race-selection">
                 <div className="race-bar">
                     {getDisplayedRaces().map((race, index) => (
@@ -173,45 +324,113 @@ const RaceStats = () => {
             </div>
             {raceData && (
                 <div>
-                    <div className='circuit-name-container'>
-                        <h2 className='circuit-name'>{raceData.circuit.name}</h2>
-                    </div>
-                    <div className="race-card">
-                        <img
-                            src={raceData.additional_info.img_src}
-                            alt={raceData.circuit.name}
-                            className="circuit-image"
-                        />
-                        <div className="circuit-info">
-                            
-                            <div className='circuit-info-heading'>Location
-                                <div className='circuit-info-data'>{raceData.circuit.location}, {raceData.circuit.country}</div>
-                            </div>
-                            <div className='circuit-info-heading'>First Grand Prix
-                                <div className='circuit-info-data'>{raceData.additional_info.first_gp}</div>
-                            </div>
-                            <div className='circuit-info-heading'>Number of Laps
-                                <div className='circuit-info-data'>{raceData.additional_info.laps}</div>
-                            </div>
-                            <div className='circuit-info-heading'>Circuit Length
-                                <div className='circuit-info-data'>{raceData.additional_info.length}
-                                    <div className='circuit-info-unit'>km</div>
-                                </div>  
-                            </div>
-                            <div className='circuit-info-heading'>Race Distance
-                                <div className='circuit-info-data'>{raceData.additional_info.race_distance}
-                                    <div className='circuit-info-unit'>km</div>
+                    <div className='circuit-card-container'>
+                        <div className='circuit-name-container'>
+                            <h2 className='circuit-name'>{raceData.circuit.name}</h2>
+                        </div>
+                        <div className="circuit-card">
+                            <img
+                                src={raceData.additional_info.img_src}
+                                alt={raceData.circuit.name}
+                                className="circuit-image"
+                            />
+                            <div className="circuit-info">
+                                <div className='circuit-info-heading'>Location
+                                    <div className='circuit-info-data'>{raceData.circuit.location}, {raceData.circuit.country}</div>
                                 </div>
-                            </div>
-                            <div className='circuit-info-heading'>Lap Record
-                                <div className='circuit-info-data'>{raceData.additional_info.lap_record}
-                                    <div className='circuit-info-unit'>{raceData.additional_info.record_holder}</div>
+                                <div className='circuit-info-heading'>First Grand Prix
+                                    <div className='circuit-info-data'>{raceData.additional_info.first_gp}</div>
+                                </div>
+                                <div className='circuit-info-heading'>Number of Laps
+                                    <div className='circuit-info-data'>{raceData.additional_info.laps}</div>
+                                </div>
+                                <div className='circuit-info-heading'>Circuit Length
+                                    <div className='circuit-info-data'>{raceData.additional_info.length}
+                                        <div className='circuit-info-unit'>km</div>
+                                    </div>
+                                </div>
+                                <div className='circuit-info-heading'>Race Distance
+                                    <div className='circuit-info-data'>{raceData.additional_info.race_distance}
+                                        <div className='circuit-info-unit'>km</div>
+                                    </div>
+                                </div>
+                                <div className='circuit-info-heading'>Lap Record
+                                    <div className='circuit-info-data'>{raceData.additional_info.lap_record}
+                                        <div className='circuit-info-unit'>{raceData.additional_info.record_holder}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
+                    <div className="toggle-switch">
+                        {raceData && raceData.sprint_weekend === 'true' ? (
+                            <div className="three-way-toggle">
+                                <label
+                                    className={selectedTable === 'qualifying' ? 'toggle-on' : 'toggle-off'}
+                                >
+                                    <input
+                                        type="radio"
+                                        value="qualifying"
+                                        checked={selectedTable === 'qualifying'}
+                                        onChange={() => setSelectedTable('qualifying')}
+                                    />
+                                    Qualifying
+                                </label>
+                                <label
+                                    className={selectedTable === 'sprint' ? 'toggle-on' : 'toggle-off'}
+                                >
+                                    <input
+                                        type="radio"
+                                        value="sprint"
+                                        checked={selectedTable === 'sprint'}
+                                        onChange={() => setSelectedTable('sprint')}
+                                    />
+                                    Sprint
+                                </label>
+                                <label
+                                    className={selectedTable === 'race' ? 'toggle-on' : 'toggle-off'}
+                                >
+                                    <input
+                                        type="radio"
+                                        value="race"
+                                        checked={selectedTable === 'race'}
+                                        onChange={() => setSelectedTable('race')}
+                                    />
+                                    Race
+                                </label>
+                            </div>
+                        ) : (
+                            <div className="two-way-toggle">
+                                <label
+                                    className={selectedTable === 'qualifying' ? 'toggle-on' : 'toggle-off'}
+                                >
+                                    <input
+                                        type="radio"
+                                        value="qualifying"
+                                        checked={selectedTable === 'qualifying'}
+                                        onChange={() => setSelectedTable('qualifying')}
+                                    />
+                                    Qualifying
+                                </label>
+                                <label
+                                    className={selectedTable === 'race' ? 'toggle-on' : 'toggle-off'}
+                                >
+                                    <input
+                                        type="radio"
+                                        value="race"
+                                        checked={selectedTable === 'race'}
+                                        onChange={() => setSelectedTable('race')}
+                                    />
+                                    Race
+                                </label>
+                            </div>
+                        )}
+                    </div>
+                    {selectedTable === 'qualifying' && renderQualiTable(raceData.race.name, qualifyingTable, "Qualifying")}
+                    {selectedTable === 'race' && renderRaceTable(raceData.race.name, raceTable, "Race")}
+                    {selectedTable === 'sprint' && renderRaceTable(raceData.race.name, sprintTable, "Sprint Race")}
                 </div>
-                
             )}
         </div>
     );
