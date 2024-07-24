@@ -1,0 +1,90 @@
+/* Stili base dell'header */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ee0000;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Assicurati che l'header si sovrapponga agli altri contenuti */
+  }
+  
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .logo img {
+    height: 40px;
+  }
+  
+  /* Stili per la navigazione */
+  .nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .nav li {
+    margin-right: 20px;
+  }
+  
+  .nav a {
+    text-decoration: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    display: inline-block;
+    background-color: transparent;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .nav a:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Media queries per la responsività */
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 10px;
+    }
+  
+    .nav ul {
+      flex-direction: column;
+      width: 100%;
+    }
+  
+    .nav li {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .nav a {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .logo img {
+      height: 30px; /* Riduce la dimensione del logo sui dispositivi più piccoli */
+    }
+  
+    .nav a {
+      font-size: 14px; /* Riduce la dimensione del font sui dispositivi più piccoli */
+    }
+  }
+  
