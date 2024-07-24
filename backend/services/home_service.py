@@ -4,50 +4,9 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from collections import defaultdict
-from services.common_service import TEAM_C, DRIVER_C, DRIVER_LS, LINESTYLES
+from services.common_service import *
 from data.model import *
 import os
-
-def get_championship_data(year):
-    """
-    Retrieves race, result, sprint result, driver, and team data for the specified year.
-
-    Args:
-        year (int): The year for which to retrieve the data.
-
-    Returns:
-        tuple: A tuple containing the following elements:
-            - races (list): A list of race documents from the 'races' collection, including 'raceId', 'round', and 'name'.
-            - results (list): A list of result documents from the 'results' collection, including 'raceId', 'driverId', 'positionOrder', 'points', and 'constructorId'.
-            - sprint_results (list): A list of sprint result documents from the 'sprint_results' collection, including 'raceId', 'driverId', 'positionOrder', 'points', and 'constructorId'.
-            - drivers (list): A list of driver documents from the 'drivers' collection, including 'driverId', 'forename', 'surname', and 'nationality'.
-            - constructors (list): A list of constructor documents from the 'constructors' collection, including 'constructorId' and 'name'.
-    """
-    # Query to get race data for the specified year
-    races = list(Races.collection.find({'year': year}, {'name': 1, 'raceId': 1, 'round': 1, '_id': 0}).sort('round'))
-    # Extract race IDs from results
-    race_ids = [race['raceId'] for race in races]
-
-    # Query to get race results
-    results = list(Results.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
-    sprint_results = list(SprintResults.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
-    combined_results = results + sprint_results
-    
-    # Filter races to only include those that have results
-    completed_race_ids = set(result['raceId'] for result in combined_results)
-    races = [race for race in races if race['raceId'] in completed_race_ids]
-    
-    # Extract driver IDs from results
-    driver_ids = list(set(result['driverId'] for result in combined_results))
-    # Query to get driver names for the relevant driver IDs
-    drivers = list(Drivers.collection.find({'driverId': {'$in': driver_ids}}, {'driverId': 1, 'forename': 1, 'surname': 1, 'nationality': 1, '_id': 0}))
-
-    # Extract team IDs from combined results
-    constructor_ids = list(set(result['constructorId'] for result in combined_results))
-    # Query to get team names for the relevant team IDs
-    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'constructorId': 1, 'name': 1, '_id': 0}))
-    
-    return races, results, sprint_results, drivers, constructors
 
 def generate_drivers_championship_plot(year):
     """
@@ -193,25 +152,181 @@ def generate_drivers_standings_table(year):
 
     return df_standings.to_dict(orient='records')
 
-def generate_home_data():
+def generate_constructors_championship_plot(year):
     """
-    Generates the home data including the driver championship plot path.
+    Generates the constructors' championship plot for the specified year and saves it as an image.
 
     Returns:
         dict: A dictionary containing the relative path to the generated plot image.
     """
+    races, results, sprint_results, drivers, constructors = get_championship_data(year)
+    
+    # Combine results and sprint results
+    combined_results = results + sprint_results
+    
+    # Create a map constructor -> {race -> points}
+    constructor_points = defaultdict(lambda: defaultdict(int))
+    for result in combined_results:
+        constructor_id = result['constructorId']
+        race_id = result['raceId']
+        points = result['points']
+        constructor_points[constructor_id][race_id] += points
+    
+    # Create a dictionary mapping race IDs to GP names
+    race_names = {race['raceId']: race['name'].replace("Grand Prix", "GP") for race in races}
+    sorted_races = [race['raceId'] for race in races]
+
+    # Calculate cumulative points for each constructor
+    constructor_cumulative_points = {}
+    for constructor_id, race_points in constructor_points.items():
+        cumulative_points = [0]  # Start from 0
+        total_points = 0
+        for race_id in sorted_races:
+            total_points += race_points.get(race_id, 0)
+            cumulative_points.append(total_points)
+        constructor_cumulative_points[constructor_id] = cumulative_points
+
+    # Create a dictionary mapping constructor IDs to constructor names
+    constructor_names = {constructor['constructorId']: constructor['name'] for constructor in constructors}
+
+    # Sort constructors by their final cumulative points in descending order
+    sorted_constructors = sorted(constructor_cumulative_points.items(), key=lambda x: x[1][-1], reverse=True)
+
+    # Generate the plot
+    plt.rc("figure", figsize=(16, 12))
+    plt.rc("font", size=(14))
+    plt.rc("axes", xmargin=0.01)
+
+    fig, ax = plt.subplots()
+    for position, (constructor_id, points) in enumerate(sorted_constructors, start=1):
+        constructor_name = constructor_names.get(constructor_id, f"Constructor {constructor_id}")
+        ax.plot(range(len(points)), points, label=f"{position}. {constructor_name}", color = TEAM_C[constructor_id], linestyle = '-')
+
+    ax.set_xticks(range(len(sorted_races) + 1))  # +1 to account for the starting 0
+    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=30)
+    ax.grid(axis="x", linestyle="--")
+    ax.set_ylabel("Points")
+    ax.set_title(f"F1 Constructors' World Championship — {year}")
+    ax.legend()
+
+    # Make the background transparent
+    fig.patch.set_alpha(0.0)
+    ax.patch.set_alpha(0.0)
+
+    # Save the plot
+    neutral_path = os.path.join('static', 'images', 'constructor_championship_plot.png')
+    storage_path = os.path.join(os.getcwd(), neutral_path)
+    return_path = os.path.join('http://127.0.0.1:5000', neutral_path)
+    fig.savefig(storage_path, format='png', transparent=True)
+    plt.close(fig)
+
+    return {'constructor_championship_plot_path': return_path}
+
+def generate_constructors_standings_table(year):
+    """
+    Generates the constructors' standings table for the specified year.
+
+    Returns:
+        dict: A dictionary containing the constructors' standings table data.
+    """
+    races, results, sprint_results, drivers, constructors = get_championship_data(year)
+
+    # Create a map constructor_id -> constructor_info
+    constructor_info = {constructor['constructorId']: constructor for constructor in constructors}
+    
+    # Create a map driver_id -> driver_surname
+    driver_surnames = {driver['driverId']: driver['surname'] for driver in drivers}
+
+    # Initialize dictionary to store constructor standings data
+    constructor_standings = defaultdict(lambda: {
+        'Constructor': '',
+        'Points': 0,
+        'Wins': 0,
+        'Podiums': 0,
+        'SprintWins': 0,
+        'SprintPodiums': 0,
+        'Drivers': []
+    })
+    
+    # Process each result to update constructor standings
+    for result in results:
+        constructor_id = result['constructorId']
+        points = result['points']
+        position = result['positionOrder']
+        driver_id = result['driverId']
+        
+        constructor_standings[constructor_id]['Points'] += points
+        if position == 1:
+            constructor_standings[constructor_id]['Wins'] += 1
+        if position <= 3:
+            constructor_standings[constructor_id]['Podiums'] += 1
+        constructor_standings[constructor_id]['Drivers'].append(driver_surnames[driver_id])
+
+    # Process each sprint result to update constructor standings
+    for sprint_result in sprint_results:
+        constructor_id = sprint_result['constructorId']
+        points = sprint_result['points']
+        position = sprint_result['positionOrder']
+        driver_id = sprint_result['driverId']
+        
+        constructor_standings[constructor_id]['Points'] += points
+        if position == 1:
+            constructor_standings[constructor_id]['SprintWins'] += 1
+        if position <= 3:
+            constructor_standings[constructor_id]['SprintPodiums'] += 1
+        constructor_standings[constructor_id]['Drivers'].append(driver_surnames[driver_id])
+
+    # Fill in constructor information
+    for constructor_id, info in constructor_info.items():
+        constructor_standings[constructor_id]['Constructor'] = info['name']
+
+    # Remove duplicates from drivers list
+    for constructor_id in constructor_standings:
+        constructor_standings[constructor_id]['Drivers'] = list(set(constructor_standings[constructor_id]['Drivers']))
+
+    # Sort constructors by their final cumulative points in descending order
+    sorted_standings = sorted(constructor_standings.items(), key=lambda x: x[1]['Points'], reverse=True)
+
+    # Create a DataFrame for better formatting
+    df_standings = pd.DataFrame([standings for constructor_id, standings in sorted_standings])
+    df_standings.index = range(1, len(df_standings) + 1)
+    df_standings.reset_index(inplace=True)
+    df_standings.rename(columns={'index': 'Position'}, inplace=True)
+
+    return df_standings.to_dict(orient='records')
+
+def generate_home_data(year):
+    """
+    Generates the home data including the driver and constructor championship plot paths and standings tables.
+
+    Returns:
+        dict: A dictionary containing the relative paths to the generated plot images and standings tables.
+    """
+    ## DRIVER STANDINGS PLOT&TABLE ##
     neutral_path = os.path.join('static', 'images', 'driver_championship_plot.png')
     storage_path = os.path.join(os.getcwd(), neutral_path)
     return_path = os.path.join('http://127.0.0.1:5000', neutral_path)
 
     if os.path.exists(storage_path):
-        plot_path = return_path
+        driver_plot_path = return_path
     else:
-        plot_path = generate_drivers_championship_plot(2024)
-    
-    standings_table = generate_drivers_standings_table(2024)
+        driver_plot_path = generate_drivers_championship_plot(year)['driver_championship_plot_path']
+    driver_standings_table = generate_drivers_standings_table(year)
+
+    ## CONSTRUCTOR STANDINGS PLOT&TABLE ##
+    neutral_path = os.path.join('static', 'images', 'constructor_championship_plot.png')
+    storage_path = os.path.join(os.getcwd(), neutral_path)
+    return_path = os.path.join('http://127.0.0.1:5000', neutral_path)
+
+    if os.path.exists(storage_path):
+        constructor_plot_path = return_path
+    else:
+        constructor_plot_path = generate_constructors_championship_plot(year)['constructor_championship_plot_path']
+    constructor_standings_table = generate_constructors_standings_table(year)
 
     return {
-        'driver_championship_plot_path': plot_path,
-        'drivers_standings_table': standings_table
+        'driver_championship_plot_path': driver_plot_path,
+        'drivers_standings_table': driver_standings_table,
+        'constructor_championship_plot_path': constructor_plot_path,
+        'constructors_standings_table': constructor_standings_table
     }

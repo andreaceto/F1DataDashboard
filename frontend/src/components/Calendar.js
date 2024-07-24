@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/Calendar.css';
 import React, { useEffect, useState } from 'react';
 import Header from './Header.js';
@@ -64,17 +66,17 @@ const Calendar = () => {
       <img src={`${process.env.PUBLIC_URL}/calendar/calendar_logo.png`} alt="Calendar Logo" className="calendar-logo"/>
       <div className="calendar-grid">
         {calendar.map((race, index) => (
-          <a href={`#race-${index}`} className="calendar-item" key={index}>
-            <div className={`cal-round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
-            <div className="cal-race-info">
-              <div className="cal-race-flag">
+          <Link to={`/racestats/${race.year}/${race.round}`} className="calendar-item" key={index}>
+            <div className={`round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
+            <div className="race-info">
+              <div className="race-flag">
                 <img src={race.flag} alt={`${race.location} flag`} />
               </div>
               <div className="cal-race-location">{race.location}</div>
               <div className="cal-race-name">{race.name}</div>
               <div className="cal-race-date">{formatDate(race.date)}</div>
             </div>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

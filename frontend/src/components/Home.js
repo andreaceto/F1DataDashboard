@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom'; // Importa Link da react-router-dom
+import { Link } from 'react-router-dom';
 
 const Home = () => {
     const [data, setData] = useState(null);
+    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -65,11 +66,50 @@ const Home = () => {
                 <h2>F1 Drivers' World Championship</h2>
                 <img src={data.driver_championship_plot_path} alt="F1 Drivers' World Championship" />
             </div>
-
-            {/* Aggiungi il pulsante per navigare alla pagina Calendar.js */}
             <div>
+                <h2>Constructors' Standings</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Constructor</th>
+                            <th>Points</th>
+                            <th>Wins</th>
+                            <th>Podiums</th>
+                            <th>Sprint Wins</th>
+                            <th>Sprint Podiums</th>
+                            <th>Drivers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.constructors_standings_table.map((constructor, index) => (
+                            <tr key={index}>
+                                <td>{constructor.Position}</td>
+                                <td>{constructor.Constructor}</td>
+                                <td>{constructor.Points}</td>
+                                <td>{constructor.Wins}</td>
+                                <td>{constructor.Podiums}</td>
+                                <td>{constructor.SprintWins}</td>
+                                <td>{constructor.SprintPodiums}</td>
+                                <td>{constructor.Drivers.join(', ')}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <h2>F1 Constructors' World Championship</h2>
+                <img src={data.constructor_championship_plot_path} alt="F1 Constructors' World Championship" />
+            </div>
+            <div>
+                <Link to="/teams">
+                    <button>Teams</button>
+                </Link>
                 <Link to="/calendar">
-                    <button>Calendario</button>
+                    <button>Calendar</button>
+                </Link>
+                <Link to={`/racestats/${currentYear}/1`}>
+                    <button>Races</button>
                 </Link>
                 <Link to="/history">
                     <button>History</button>

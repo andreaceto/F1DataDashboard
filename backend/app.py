@@ -1,9 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
 from routes import home_route, raceStats_route, teamSection_route, calendar_route, history_route
-from services.home_service import generate_home_data
-from services.calendar_service import get_calendar
-from services.history_service import generate_history_data
 
 def create_app():
     """

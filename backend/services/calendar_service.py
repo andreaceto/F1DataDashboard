@@ -15,7 +15,7 @@ def get_calendar(year):
     Returns:
         list: Una lista di dizionari, ciascuno contenente il nome della gara, la località e il periodo (da fp1_date a date), ordinati per data.
     """
-    races = list(Races.collection.find({'year': year}, {'name': 1, 'fp1_date': 1, 'date': 1, 'circuitId': 1, '_id': 0}).sort('date'))
+    races = list(Races.collection.find({'year': year}, {'raceId': 1, 'year': 1, 'round': 1, 'circuitId': 1, 'name': 1, 'fp1_date': 1, 'date': 1, '_id': 0}).sort('date'))
     
     # Dizionario per mappare i nomi delle gare alle loro località speciali
     special_locations = {
@@ -67,6 +67,10 @@ def get_calendar(year):
         
         # Costruisci il dizionario per ogni gara
         race_dict = {
+            'raceId': race['raceId'],
+            'year': race['year'],
+            'round': race['round'],
+            'circuitId': race['circuitId'],
             'name': race['name'].replace(' Grand Prix', ' GP'),
             'date': f"{race['fp1_date']} - {race['date']}",
             'location': location,

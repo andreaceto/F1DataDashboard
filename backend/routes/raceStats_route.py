@@ -1,25 +1,45 @@
 from flask import Blueprint, jsonify, request
-from services.raceStats_service import get_race_stats
+from services.raceStats_service import *
 
 race_stats_bp = Blueprint('race_stats', __name__)
 
-@race_stats_bp.route('/raceStats', methods=['GET'])
-def race_stats():
-    """
-    Route to get race statistics for a specific race.
-    
-    Query Parameters:
-        race_id (str): The ID of the race.
-    
-    Returns:
-        response (json): A JSON response containing race statistics or an error message.
-    """
-    race_id = request.args.get('race_id')
-    if not race_id:
-        return jsonify({"error": "Race ID not provided"}), 400
+@race_stats_bp.route('/racestats/calendar/<int:year>', methods=['GET'])
+def fetch_calendar(year):
+    try:
+        calendar = get_calendar(year)
+        return jsonify(calendar)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    stats = get_race_stats(race_id)
-    if not stats:
-        return jsonify({"error": "Race not found"}), 404
+@race_stats_bp.route('/racestats/race/<int:year>/<int:round>', methods=['GET'])
+def fetch_race_data(year, round):
+    try:
+        race_data = get_race_data(year, round)
+        return jsonify(race_data)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
-    return jsonify(stats), 200
+@race_stats_bp.route('/racestats/qualifying/<int:race_id>', methods=['GET'])
+def fetch_qualifying_table(race_id):
+    try:
+        qualifying_table = generate_qualifying_table(race_id)
+        return jsonify(qualifying_table)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@race_stats_bp.route('/racestats/race/<int:race_id>', methods=['GET'])
+def fetch_race_table(race_id):
+    try:
+        race_table = generate_race_table(race_id)
+        return jsonify(race_table)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+@race_stats_bp.route('/racestats/sprint/<int:race_id>', methods=['GET'])
+def fetch_sprint_table(race_id):
+    try:
+        sprint_table = generate_sprint_table(race_id)
+        return jsonify(sprint_table)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
