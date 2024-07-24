@@ -1,32 +1,31 @@
 from flask import Blueprint, jsonify, request
-from services.teamSection_service import get_teams, get_team
+from flask import Blueprint, jsonify
+from services.teamSection_service import get_teams, get_team_stats
 
-team_section_bp = Blueprint('team_section', __name__)
+team_section_bp = Blueprint('teams', __name__)
 
 @team_section_bp.route('/teams', methods=['GET'])
 def teams():
     """
-    Route to get information about all teams.
-    
+    Endpoint to get all teams.
+
     Returns:
-        response (json): A JSON response containing information about all teams.
+        Response: JSON response containing the list of teams.
     """
-    teams = get_teams()
-    return jsonify(teams), 200
+    teams = get_teams(2024)
+    return jsonify(teams)
 
 @team_section_bp.route('/teams/<team_id>', methods=['GET'])
-def team(team_id):
+def team_stats(team_id):
     """
-    Route to get information about a specific team.
-    
+    Endpoint to get statistics for a specific team.
+
     Args:
         team_id (str): The ID of the team.
-    
-    Returns:
-        response (json): A JSON response containing information about the specified team or an error message.
-    """
-    team_info = get_team(team_id)
-    if not team_info:
-        return jsonify({"error": "Team not found"}), 404
 
-    return jsonify(team_info), 200
+    Returns:
+        Response: JSON response containing team and driver statistics.
+    """
+    stats = get_team_stats(team_id, 2024)
+    return jsonify(stats)
+

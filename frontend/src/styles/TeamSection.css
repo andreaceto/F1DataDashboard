@@ -1,0 +1,44 @@
+.team-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.team-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #ddd;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.team-button.selected {
+    background-color: #4CAF50;  /* Highlight color for selected button */
+    color: white;
+}
+
+.team-button:hover {
+    background-color: #aaa;
+}
+
+.team-card, .driver-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.drivers-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.driver-card {
+    flex: 1;
+    min-width: 250px;
+}
