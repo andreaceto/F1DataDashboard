@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import Header from './Header.js';
+import Footer from './Footer.js';
 import '../styles/RaceStats.css';
 
 const raceFlags = {
@@ -277,6 +279,8 @@ const RaceStats = () => {
     };
 
     return (
+        <>
+        <Header/>
         <div className='main-container'>
             <div className="race-selection">
                 <div className="race-bar">
@@ -433,6 +437,8 @@ const RaceStats = () => {
                 </div>
             )}
         </div>
+        <Footer/>
+        </>
     );
 };
 

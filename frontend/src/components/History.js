@@ -92,35 +92,35 @@ const History = () => {
 
   return (
     <>
-      <Header /> {/* Importa ed usa il componente Header */}
-      <div className="main-content"> {/* Nuova classe per il contenitore principale */}
-        <div className="header-image-container">
-          <img src={`${process.env.PUBLIC_URL}/all_time/alltimeLogo.png`} alt="All-Time Stats" className="header-image" />
+      <Header /> {}
+      <div className="hist-main-content"> {}
+        <div className="hist-header-image-container">
+          <img src={`${process.env.PUBLIC_URL}/all_time/alltimeLogo.png`} alt="All-Time Stats" className="hist-header-image" />
         </div>
 
-        <div className="grid-section">
-        <h2 className="grid-title">DRIVER STATS</h2>
-          <div className="grid-container">
-            <div className="navigation-buttons left">
+        <div className="hist-grid-section">
+        <h2 className="hist-grid-title">DRIVER STATS</h2>
+          <div className="hist-grid-container">
+            <div className="hist-navigation-buttons left">
               <button onClick={handlePrevClick}>{'<'}</button>
             </div>
             {Array.from({ length: 3 }).map((_, index) => {
               const imgIndex = (carouselPosition + index) % carouselImages.length;
               const image = carouselImages[imgIndex];
               return (
-                <div className="image-container" key={image.id} onClick={() => handleImageClick(image.id, false, false)}>
-                  <img src={image.src} alt={image.alt} className="history-logo" />
-                  <p className="image-title">{image.title}</p>
+                <div className="hist-image-container" key={image.id} onClick={() => handleImageClick(image.id, false, false)}>
+                  <img src={image.src} alt={image.alt} className="hist-history-logo" />
+                  <p className="hist-image-title">{image.title}</p>
                 </div>
               );
             })}
-            <div className="navigation-buttons right">
+            <div className="hist-navigation-buttons right">
               <button onClick={handleNextClick}>{'>'}</button>
             </div>
           </div>
         </div>
 
-        <div className="table-container">
+        <div className="hist-table-container">
           {activeTable === 1 && <MostWorldChampionshipsTable driverHistory={driverHistory} />}
           {activeTable === 2 && <MostWinsTable driverHistory={driverHistory} />}
           {activeTable === 3 && <MostPodiumsTable driverHistory={driverHistory} />}
@@ -128,29 +128,29 @@ const History = () => {
           {activeTable === 5 && <MostPolePositionsTable driverHistory={driverHistory} />}
         </div>
 
-        <div className="grid-section">
-          <h2 className="grid-title">CONSTRUCTORS STATS</h2>
-          <div className="grid-container">
-            <div className="navigation-buttons left">
+        <div className="hist-grid-section">
+          <h2 className="hist-grid-title">CONSTRUCTORS STATS</h2>
+          <div className="hist-grid-container">
+            <div className="hist-navigation-buttons left">
               <button onClick={handleAdditionalPrevClick}>{'<'}</button>
             </div>
             {Array.from({ length: 3 }).map((_, index) => {
               const imgIndex = (additionalCarouselPosition + index) % additionalCarouselImages.length;
               const image = additionalCarouselImages[imgIndex];
               return (
-                <div className="image-container" key={image.id} onClick={() => handleImageClick(image.id, true, false)}>
-                  <img src={image.src} alt={image.alt} className="history-logo" />
-                  <p className="image-title">{image.title}</p>
+                <div className="hist-image-container" key={image.id} onClick={() => handleImageClick(image.id, true, false)}>
+                  <img src={image.src} alt={image.alt} className="hist-history-logo" />
+                  <p className="hist-image-title">{image.title}</p>
                 </div>
               );
             })}
-            <div className="navigation-buttons right">
+            <div className="hist-navigation-buttons right">
               <button onClick={handleAdditionalNextClick}>{'>'}</button>
             </div>
           </div>
         </div>
 
-        <div className="table-container">
+        <div className="hist-table-container">
           {activeAdditionalTable === 6 && <MostConstructorsChampionshipsTable driverHistory={driverHistory} />}
           {activeAdditionalTable === 7 && <MostConstructorsWinsTable driverHistory={driverHistory} />}
           {activeAdditionalTable === 8 && <MostConstructorsPodiumsTable driverHistory={driverHistory} />}
@@ -158,51 +158,47 @@ const History = () => {
           {activeAdditionalTable === 10 && <MostConstructorsFastestLapsTable driverHistory={driverHistory} />}
         </div>
 
-        <div className="grid-section">
-          <h2 className="grid-title">OTHER STATS</h2>
-          <div className="grid-container">
-            <div className="navigation-buttons left">
+        <div className="hist-grid-section">
+          <h2 className="hist-grid-title">OTHER STATS</h2>
+          <div className="hist-grid-container">
+            <div className="hist-navigation-buttons left">
               <button onClick={handleThirdPrevClick}>{'<'}</button>
             </div>
             {Array.from({ length: 3 }).map((_, index) => {
               const imgIndex = (thirdCarouselPosition + index) % thirdCarouselImages.length;
               const image = thirdCarouselImages[imgIndex];
               return (
-                <div className="image-container" key={image.id} onClick={() => handleImageClick(image.id, false, true)}>
-                  <img src={image.src} alt={image.alt} className="history-logo" />
-                  <p className="image-title">{image.title}</p>
+                <div className="hist-image-container" key={image.id} onClick={() => handleImageClick(image.id, false, true)}>
+                  <img src={image.src} alt={image.alt} className="hist-history-logo" />
+                  <p className="hist-image-title">{image.title}</p>
                 </div>
               );
             })}
-            <div className="navigation-buttons right">
+            <div className="hist-navigation-buttons right">
               <button onClick={handleThirdNextClick}>{'>'}</button>
             </div>
           </div>
         </div>
 
-        <div className="table-container">
+        <div className="hist-table-container">
           {activeThirdTable === 11 && <MostCircuitsGPTable driverHistory={driverHistory} />}
           {activeThirdTable === 12 && <MostNationsWinsTable driverHistory={driverHistory} />}
           {activeThirdTable === 13 && <MostNationsDriversTable driverHistory={driverHistory} />}
         </div>
       </div>
-      <Footer /> {/* Importa ed usa il componente Footer */}
+      <Footer /> {}
     </>
     
   );
 };
-
-
-
-
 /*
 
-  STATISTICHE PILOTI
+  DRIVER STATS
 
 */
 const MostWorldChampionshipsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table world-championships-table">
+    <table className="hist-specific-page-table world-championships-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -227,7 +223,7 @@ const MostWorldChampionshipsTable = ({ driverHistory }) => {
 
 const MostWinsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table wins-table">
+    <table className="hist-specific-page-table wins-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -256,7 +252,7 @@ const MostWinsTable = ({ driverHistory }) => {
 
 const MostPodiumsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table podiums-table">
+    <table className="hist-specific-page-table podiums-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -285,7 +281,7 @@ const MostPodiumsTable = ({ driverHistory }) => {
 
 const MostPointsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table points-table">
+    <table className="hist-specific-page-table points-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -312,7 +308,7 @@ const MostPointsTable = ({ driverHistory }) => {
 
 const MostPolePositionsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table pole-positions-table">
+    <table className="hist-specific-page-table pole-positions-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -341,7 +337,7 @@ const MostPolePositionsTable = ({ driverHistory }) => {
 
 const MostConstructorsChampionshipsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table constructors-championships-table">
+    <table className="hist-specific-page-table constructors-championships-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -364,7 +360,7 @@ const MostConstructorsChampionshipsTable = ({ driverHistory }) => {
 
 const MostConstructorsWinsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table constructors-wins-table">
+    <table className="hist-specific-page-table constructors-wins-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -391,7 +387,7 @@ const MostConstructorsWinsTable = ({ driverHistory }) => {
 
 const MostConstructorsPodiumsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table constructors-podiums-table">
+    <table className="hist-specific-page-table constructors-podiums-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -418,7 +414,7 @@ const MostConstructorsPodiumsTable = ({ driverHistory }) => {
 
 const MostConstructorsStartsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table constructors-starts-table">
+    <table className="hist-specific-page-table constructors-starts-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -443,7 +439,7 @@ const MostConstructorsStartsTable = ({ driverHistory }) => {
 
 const MostConstructorsFastestLapsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table constructors-fastest-laps-table">
+    <table className="hist-specific-page-table constructors-fastest-laps-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -470,7 +466,7 @@ const MostConstructorsFastestLapsTable = ({ driverHistory }) => {
 
 const MostCircuitsGPTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table most-circuits-gp-table">
+    <table className="hist-specific-page-table most-circuits-gp-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -497,7 +493,7 @@ const MostCircuitsGPTable = ({ driverHistory }) => {
 
 const MostNationsWinsTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table most-nations-wins-table">
+    <table className="hist-specific-page-table most-nations-wins-table">
       <thead>
         <tr>
           <th>Position</th>
@@ -524,7 +520,7 @@ const MostNationsWinsTable = ({ driverHistory }) => {
 
 const MostNationsDriversTable = ({ driverHistory }) => {
   return (
-    <table className="specific-page-table most-nations-drivers-table">
+    <table className="hist-specific-page-table most-nations-drivers-table">
       <thead>
         <tr>
           <th>Position</th>

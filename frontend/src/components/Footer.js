@@ -5,7 +5,9 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="logoFooter">
-        <img src={`${process.env.PUBLIC_URL}/F1_logo.png`} alt="F1-Logo" />
+        <a href='https://www.formula1.com/en.html' target="_blank" rel="noopener noreferrer">
+          <img src={`${process.env.PUBLIC_URL}/F1_logo.png`} alt="F1-Logo" />
+        </a>
       </div>
       <div className="socialMedia">
         <a href="https://www.facebook.com/Formula1/" target="_blank" rel="noopener noreferrer">

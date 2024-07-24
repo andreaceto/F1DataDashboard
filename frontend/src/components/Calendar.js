@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/Calendar.css';
-import React, { useEffect, useState } from 'react';
 import Header from './Header.js';
 import Footer from './Footer.js';
+import '../styles/Calendar.css';
 
 const Calendar = () => {
   const [calendar, setCalendar] = useState([]);
@@ -61,7 +60,7 @@ const Calendar = () => {
 
   return (
     <>
-    <Header /> {/* Importa ed usa il componente Header */}
+    <Header /> {}
     <div className="calendar-container">
       <img src={`${process.env.PUBLIC_URL}/calendar/calendar_logo.png`} alt="Calendar Logo" className="calendar-logo"/>
       <div className="calendar-grid">
@@ -80,7 +79,7 @@ const Calendar = () => {
         ))}
       </div>
     </div>
-    <Footer /> {/* Importa ed usa il componente Footer */}
+    <Footer /> {}
     </>
   );
 };

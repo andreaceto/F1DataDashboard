@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import Header from './Header.js';
+import Footer from './Footer.js';
 
 const Home = () => {
     const [data, setData] = useState(null);
-    const currentYear = new Date().getFullYear();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -27,6 +27,8 @@ const Home = () => {
     }
 
     return (
+        <>
+        <Header/>
         <div>
             <h1>F1 Data Dashboard</h1>
             <div>
@@ -101,21 +103,9 @@ const Home = () => {
                 <h2>F1 Constructors' World Championship</h2>
                 <img src={data.constructor_championship_plot_path} alt="F1 Constructors' World Championship" />
             </div>
-            <div>
-                <Link to="/teams">
-                    <button>Teams</button>
-                </Link>
-                <Link to="/calendar">
-                    <button>Calendar</button>
-                </Link>
-                <Link to={`/racestats/${currentYear}/1`}>
-                    <button>Races</button>
-                </Link>
-                <Link to="/history">
-                    <button>History</button>
-                </Link>
-            </div>
         </div>
+        <Footer/>
+        </>
     );
 };
 
