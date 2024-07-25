@@ -1,44 +1,403 @@
-.team-buttons {
+/*  TEAMS SELECTION CAROUSEL    */
+
+.ts-team-carousel {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 20px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
 }
 
-.team-button {
-    padding: 10px 20px;
-    font-size: 16px;
+.ts-carousel-button {
+    background: none;
     border: none;
-    border-radius: 5px;
     cursor: pointer;
-    background-color: #ddd;
-    transition: background-color 0.3s, color 0.3s;
+    font-size: 3rem;
+    color: #F9F9F9;
+    transition: transform 0.2s;
 }
 
-.team-button.selected {
-    background-color: #4CAF50;  /* Highlight color for selected button */
-    color: white;
+.ts-carousel-button:hover {
+    transform: scale(1.25);
 }
 
-.team-button:hover {
-    background-color: #aaa;
+.ts-carousel-items {
+    display: flex;
+    overflow: visible;
+    width: 60%;
+    justify-content: space-around;
+    padding: 10px;
+    background-color: #00010c;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
 }
 
-.team-card, .driver-card {
-    border: 1px solid #ccc;
+.ts-carousel-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: transform 0.3s;
     border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.drivers-container {
+.ts-carousel-item:hover {
+    transform: scale(1.1);
+}
+
+.ts-carousel-team-logo {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.ts-carousel-item.selected {
+    transform: scale(1.5);
+    border: .15rem solid #9E9E9F;
+}
+
+/*  TEAM CARD   */
+
+.ts-team-card {
+    margin-bottom: 2rem;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    position: relative;
+    min-height: 350px;
+}
+
+.ts-team-card-info-container {
+    flex: 1;
+    position: relative;
+}
+
+.ts-team-card-bios-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: baseline;
+    z-index: 1;
+}
+
+.ts-team-name-wrapper {
+    padding: .5rem 0rem 0rem 1.5rem;
+}
+
+.ts-team-name {
+    color: #F9F9F9;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.ts-team-nat-flag-wrapper {
+    margin-left: .5rem;
+}
+
+.ts-team-nat-flag {
+    width: 38px;
+    height: 24px;
+    border-radius: .2rem;
+}
+
+.ts-team-stats-container {
+    clip-path: polygon(0 0, 100% 0, 53% 100%, 0 100%);
+    height: 100%;
+    background-color: #00010c;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15%;
+}
+
+.ts-teams-points-wrapper {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: .5rem;
+    padding: .7rem;
+    width: fit-content;
+    border-bottom: 0.1rem solid darkgray;
+    border-right: 0.1rem solid darkgray;
+    border-radius: 0.3rem;
+    box-shadow: .15rem .15rem #3E3E3E;
+}
+
+.ts-teams-points {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.ts-team-stats-header {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: -.3rem;
+}
+
+.ts-team-stats {
+    display: flex;
+    align-items: center;
+    margin-top: -.5rem;
+}
+
+.ts-team-stat-primary {
+    font-size: 1.7rem;
+    color: #F9F9F9;
+}
+
+.ts-team-stat-secondary {
+    margin-left: .3rem;
+    font-size: 1.1rem;
+    color: #9E9E9F;
+}
+
+.ts-team-disclaimer {
+    padding: 0rem 0rem .7rem 1.5rem;
+    color: #9E9E9F;
+    font-size: .7rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+.ts-team-card-content-container {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+}
+
+.ts-team-car-img-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-60%, -50%);
+    z-index: 1;
+}
+
+.ts-team-car-img {
+    max-width: 500px;
+}
+
+.ts-team-car-name-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    padding: 0rem 1.5rem .5rem 0rem;
+}
+
+.ts-team-car-name {
+    color: transparent;
+    font-size: 2.5rem;
+    font-weight: 700;
+    -webkit-text-stroke-color: #F9F9F9;
+    -webkit-text-stroke-width: .08rem;
+}
+
+.ts-team-logo-wrapper {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-60%, -50%);
+    display: flex;
+}
+
+.ts-team-logo {
+    max-height: 400px;
+}
+
+/*  DRIVER CARDS    */
+
+.ts-drivers-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    margin-bottom: 2.5rem;
 }
 
-.driver-card {
+.ts-driver-card {
     flex: 1;
     min-width: 250px;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2)
+}
+
+.ts-driver-card-content-container {
+    position: relative;
+    background-color: #00010c;
+}
+
+.ts-driver-img-wrapper {
+    display: flex;
+    margin-top: -1.5rem;
+}
+
+.ts-driver-img {
+    width: 220px;
+    height: 220px;
+    z-index: 1;
+}
+
+.ts-driver-img-element {
+    clip-path: polygon(0 0, 100% 0, 50% 100%, 0 100%);
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+}
+
+.ts-driver-team-logo-wrapper {
+    display: flex;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 2.5rem;
+    overflow: hidden;
+}
+
+.ts-driver-team-logo {
+    max-width: 150px;
+    max-height: 150px;
+    margin-left: -1.8rem;
+}
+
+.ts-driver-points-wrapper {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: .5rem .5rem 0rem 0rem;
+    border-bottom: 0.1rem solid darkgray;
+    border-left: 0.1rem solid darkgray;
+    border-radius: 0.3rem;
+    box-shadow: -.15rem .15rem #3E3E3E;
+}
+
+.ts-driver-points {
+    color: #F9F9F9;
+    font-size: 2rem;
+    font-weight: 700;
+    padding: 0rem 0rem .1rem .8rem;
+}
+
+.ts-driver-stats-container {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    margin-right: 20%;
+}
+
+.ts-driver-stat-row {
+    display: flex;
+    margin-bottom: -.7rem; /* Adjust as needed for spacing between rows */
+}
+
+.ts-driver-stat-header {
+    display: flex;
+    align-items: baseline;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-right: 10px; /* Adjust as needed for spacing between header and primary stat */
+}
+
+.ts-driver-stat-primary {
+    margin-left: .4rem; /* Adjust as needed for spacing between primary and secondary stat */
+    font-size: 1.7rem; /* Adjust as needed for primary stat size */
+    color: #F9F9F9;
+}
+
+.ts-driver-stat-secondary {
+    margin-left: .3rem; /* Adjust as needed for spacing between primary and secondary stat */
+    font-size: 1.1rem; /* Adjust as needed for secondary stat size */
+    color: #9E9E9F;; /* Adjust as needed for secondary stat color */
+}
+
+.ts-driver-disclaimer {
+    margin: 0rem .5rem .1rem 0rem;
+    color: #9E9E9F;
+    font-size: .6rem;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.ts-driver-card-info-container {
+    position: relative;
+    background-color: #1C1C1C;
+    display: flex;
+}
+
+.ts-driver-card-bios-container {
+    flex: 1;
+    padding: .9rem 0rem .8rem 1rem;
+}
+
+.ts-driver-nat-flag-wrapper {
+    margin-bottom: -.5rem;
+}
+
+.ts-driver-nat-flag {
+    width: 25px;
+    height: 16px;
+    border-radius: .15rem;
+}
+
+.ts-driver-fullName-container {
+    display: flex;
+    align-items: baseline;
+    color: #F9F9F9;
+}
+
+.ts-driver-forename {
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.ts-driver-surname {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-left: .3rem;
+}
+
+.ts-driver-dob-container {
+    display: flex;
+    color: #9E9E9F;
+}
+
+.ts-driver-dob {
+
+}
+
+.ts-driver-age {
+    margin-left: .3rem;
+    font-weight: 600;
+}
+
+.ts-driver-bios-element {
+    flex: 1;
+    align-content: center;
+    text-align: end;
+    clip-path: polygon(70% 0, 40% 100%, 100% 100%, 100% 0);
+    background-color: #2E2E32;
+}
+
+.ts-driver-number {
+    color: transparent;
+    font-size: 3.8rem;
+    font-style: italic;
+    font-weight: 700;
+    -webkit-text-stroke-width: .27rem;
+    margin-right: 1.2rem;
 }

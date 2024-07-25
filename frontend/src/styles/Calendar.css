@@ -1,35 +1,38 @@
-.calendar-container {
-  font-family: Arial, sans-serif;
+#root {
+  background: #3E3E3E;
+}
+
+.cal-calendar-container {
   padding: 2vw; 
   text-align: center;
   background-color: #00010c;
   color: #ffffff;
-  width: 90%; /* Larghezza del container */
-  max-width: 1000px; /* Larghezza massima del container */
-  height: auto; /* Altezza del container */
-  margin: 30px auto 0; /* Margin-top = altezza dell'header + padding */
+  width: 90%;
+  max-width: 1000px;
+  height: auto;
+  margin: 30px auto 0;
  
 }
 
-.calendar-logo {
-  width: 100%; /* Larghezza pari al 100% del container */
+.cal-calendar-logo {
+  width: 100%;
   max-width: 100%;
   height: auto;
   margin-bottom: 2rem;
 }
 
-.calendar-grid {
+.cal-calendar-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1rem;
   height: 100%;
   overflow-y: auto;
-  padding: 1rem; /* Add some padding to the grid container */
-  box-sizing: border-box; /* Make sure the padding is included in the width calculation */
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
-.calendar-item {
-  background-color: #1b1a1a;
+.cal-calendar-item {
+  background-color: #1E1E1E;
   color: white;
   padding: 1rem;
   border-radius: 8px;
@@ -38,10 +41,12 @@
   align-items: center;
   text-decoration: none;
   color: inherit;
+  position: relative;
 }
 
-.calendar-item:hover {
-  background-color: #333;
+.cal-calendar-item:hover {
+  background-color: #3E3E3E;
+  border: 1px solid #F9F9F9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
   transition: all 0.3s ease-in-out;
@@ -49,11 +54,15 @@
 
 .cal-round {
   background-color: #ed0000;
+  width: 2.4rem;
+  height: 1.5rem;
   color: white;
-  font-size: 1.5rem;
-  padding: 0.5rem 1rem;
-  border-radius: 50%;
-  margin-bottom: 1rem;
+  font-size: 1rem;
+  border-radius: .3rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: .4rem;
 }
 
 .cal-round.past {
@@ -68,19 +77,24 @@
   width: 60px;
   height: 35px;
   margin-bottom: 0.5rem;
-}
-
-.cal-race-location {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  border-radius: .3rem;
 }
 
 .cal-race-name {
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: -.3rem;
+  color: #F9F9F9;
+}
+
+.cal-race-location {
+  font-size: .9rem;
   margin-bottom: 0.5rem;
+  color: #9F9F9E;
 }
 
 .cal-race-date {
-  font-size: 0.8rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #9E9E9F;
 }

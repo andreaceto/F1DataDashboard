@@ -2,8 +2,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 4rem;
     margin-bottom: 20px;
+    margin-top: 4rem;
 }
 
 .race-bar {
@@ -273,6 +273,7 @@
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin-bottom: 4rem;
 }
 
 .quali-table table, .race-table table {

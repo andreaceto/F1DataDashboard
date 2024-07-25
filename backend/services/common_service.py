@@ -18,13 +18,13 @@ def get_championship_data(year):
             - constructors (list): A list of constructor documents from the 'constructors' collection, including 'constructorId' and 'name'.
     """
     # Query to get race data for the specified year
-    races = list(Races.collection.find({'year': year}, {'name': 1, 'raceId': 1, 'round': 1, '_id': 0}).sort('round'))
+    races = list(Races.collection.find({'year': year}, {'_id': 0}).sort('round'))
     # Extract race IDs from results
     race_ids = [race['raceId'] for race in races]
 
     # Query to get race results
-    results = list(Results.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
-    sprint_results = list(SprintResults.collection.find({'raceId': {'$in': race_ids}}, {'raceId': 1, 'driverId': 1, 'positionOrder': 1, 'points': 1, 'constructorId': 1, '_id': 0}))
+    results = list(Results.collection.find({'raceId': {'$in': race_ids}}, {'_id': 0}))
+    sprint_results = list(SprintResults.collection.find({'raceId': {'$in': race_ids}}, {'_id': 0}))
     combined_results = results + sprint_results
     
     # Filter races to only include those that have results
@@ -34,12 +34,12 @@ def get_championship_data(year):
     # Extract driver IDs from results
     driver_ids = list(set(result['driverId'] for result in combined_results))
     # Query to get driver names for the relevant driver IDs
-    drivers = list(Drivers.collection.find({'driverId': {'$in': driver_ids}}, {'driverId': 1, 'forename': 1, 'surname': 1, 'nationality': 1, '_id': 0}))
+    drivers = list(Drivers.collection.find({'driverId': {'$in': driver_ids}}, {'_id': 0}))
 
     # Extract team IDs from combined results
     constructor_ids = list(set(result['constructorId'] for result in combined_results))
     # Query to get team names for the relevant team IDs
-    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'constructorId': 1, 'name': 1, 'nationality':1, '_id': 0}))
+    constructors = list(Constructors.collection.find({'constructorId': {'$in': constructor_ids}}, {'_id': 0}))
     
     return races, results, sprint_results, drivers, constructors
 
@@ -127,6 +127,48 @@ TEAM_C = {
     215: "#6692FF", # Racing Bulls
     15: "#52E252", # Sauber
     210: "#B6BABD"  # Haas
+}
+
+TEAM_LOGOS = {
+# ConstructorId : TeamLogo.png
+    9: "redbull_logo.png", # Red Bull
+    131: "mercedes_logo.png", # Mercedes
+    6: "ferrari_logo.png", # Ferrari
+    1: "mclaren_logo.png", # McLaren
+    117: "astonmartin_logo.png", # Aston Martin
+    214: "alpine_logo.png", # Alpine
+    3: "williams_logo.png", # Williams
+    215: "visacashapprb_logo.png", # Racing Bulls
+    15: "stake-f1-team-logo.png", # Sauber
+    210: "haas_logo.png"  # Haas
+}
+
+TEAM_NAT_FLAGS = {
+# ConstructorId : TeamNationalityFlags.png
+    9: "austria.png", # Red Bull
+    131: "german.png", # Mercedes
+    6: "italy.png", # Ferrari
+    1: "uk.png", # McLaren
+    117: "uk.png", # Aston Martin
+    214: "france.png", # Alpine
+    3: "uk.png", # Williams
+    215: "italy.png", # Racing Bulls
+    15: "swiss.png", # Sauber
+    210: "usa.png"  # Haas
+}
+
+CARS = {
+# ConstructorId : [car.png, car_name]
+    9: ["red-bull-racing.png", "RB20"], # Red Bull
+    131: ["mercedes.png", "W15"], # Mercedes
+    6: ["ferrari.png", "SF-24"], # Ferrari
+    1: ["mclaren.png", "MCL38"], # McLaren
+    117: ["aston-martin.png", "AMR24"], # Aston Martin
+    214: ["alpine.png", "A524"], # Alpine
+    3: ["williams.png", "FW46"], # Williams
+    215: ["rb.png", "VCARB 01"], # Racing Bulls
+    15: ["kick-sauber.png", "C44"], # Sauber
+    210: ["haas.png", "VF-24"]  # Haas
 }
 
 DRIVER_C = {

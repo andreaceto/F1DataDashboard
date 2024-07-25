@@ -37,9 +37,9 @@ const Calendar = () => {
     const startDate = new Date(start);
     const endDate = new Date(end);
     const startDay = startDate.getDate();
-    const startMonth = startDate.toLocaleString('en-EN', { month: 'long' });
+    const startMonth = startDate.toLocaleString('en-EN', { month: 'short' });
     const endDay = endDate.getDate();
-    const endMonth = endDate.toLocaleString('en-EN', { month: 'long' });
+    const endMonth = endDate.toLocaleString('en-EN', { month: 'short' });
 
     const capitalizeFirstLetter = (string) => {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -61,18 +61,18 @@ const Calendar = () => {
   return (
     <>
     <Header /> {}
-    <div className="calendar-container">
-      <img src={`${process.env.PUBLIC_URL}/calendar/calendar_logo.png`} alt="Calendar Logo" className="calendar-logo"/>
-      <div className="calendar-grid">
+    <div className="cal-calendar-container">
+      <img src={`${process.env.PUBLIC_URL}/calendar/calendar_logo.png`} alt="Calendar Logo" className="cal-calendar-logo"/>
+      <div className="cal-calendar-grid">
         {calendar.map((race, index) => (
-          <Link to={`/racestats/${race.year}/${race.round}`} className="calendar-item" key={index}>
-            <div className={`round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
-            <div className="race-info">
-              <div className="race-flag">
+          <Link to={`/racestats/${race.year}/${race.round}`} className="cal-calendar-item" key={index}>
+            <div className={`cal-round ${isRacePast(race.date) ? 'past' : ''}`}>R{index + 1}</div>
+            <div className="cal-race-info">
+              <div className="cal-race-flag">
                 <img src={race.flag} alt={`${race.location} flag`} />
               </div>
-              <div className="cal-race-location">{race.location}</div>
               <div className="cal-race-name">{race.name}</div>
+              <div className="cal-race-location">{race.location}</div>
               <div className="cal-race-date">{formatDate(race.date)}</div>
             </div>
           </Link>
