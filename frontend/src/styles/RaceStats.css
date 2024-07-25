@@ -1,3 +1,5 @@
+/*  RACE SELECTION CAROUSEL */
+
 .race-selection {
     display: flex;
     flex-direction: column;
@@ -8,13 +10,12 @@
 
 .race-bar {
     display: flex;
-    overflow: hidden;
     width: 70%;
     justify-content: center;
-    background-color: #1E1E1E;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #00010c;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
 }
 
 .race-item {
@@ -27,7 +28,6 @@
     transition: transform 0.3s;
     width: 150px;
     box-sizing: border-box;
-    border: 1px solid #3E3E3E;
     border-radius: 5px;
 }
 
@@ -133,11 +133,14 @@
     outline: .15rem solid rgba(12, 12, 15, .1);
 }
 
+/* CIRCUIT CARD */
+
 .circuit-card-container {
     padding: 20px;
-    background-color: #1E1E1E;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #00010c;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
     margin: 0 auto;
     margin-top: 3rem;
 }
@@ -201,6 +204,8 @@
     font-size: 0.8rem;
     margin: 0rem 0rem 0rem 0.2rem;
 }
+
+/*  SESSION TABLE SWITCH    */
 
 .toggle-switch {
     display: flex;
@@ -266,13 +271,16 @@
     border-radius: .3rem;
 }
 
+/* TABLES */
+
 .quali-table, .race-table {
     width: 80%;
     margin: 0 auto;
-    background-color: #1E1E1E;
     padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: #00010c;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
     margin-bottom: 4rem;
 }
 

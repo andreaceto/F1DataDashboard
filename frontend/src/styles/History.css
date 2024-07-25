@@ -7,6 +7,7 @@
   max-width: 600px;
   height: auto;
   margin: 0 auto;
+  margin-top: 3rem;
 }
 
 .hist-header-image {
@@ -63,7 +64,7 @@
   transform: translateX(-50%);
   font-size: 1rem;
   font-weight: bold;
-  color: #fff;
+  color: #f9f9f9;
   padding: 5px 10px;
   border-radius: 10px;
   background-color: rgba(0, 0, 0, 0.5);
@@ -87,7 +88,7 @@
 
 .hist-navigation-buttons button {
   background-color: transparent;
-  color: rgb(226, 48, 48);
+  color: #f9f9f9;
   font-size: 1.5rem;
   border: none;
   cursor: pointer;
@@ -107,7 +108,8 @@
 }
 
 .hist-table-container {
-  margin-top: 40px;
+  margin-top: .4rem;
+  margin-bottom: 1.5rem;
 }
 
 .hist-specific-page-table {
@@ -116,6 +118,7 @@
   background: #1f1f1f;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: #f9f9f9;
 }
 
 .hist-specific-page-table, .specific-page-table th, .specific-page-table td {
@@ -144,7 +147,7 @@
 }
 
 .hist-grid-title {
-  color: #f4f4f4;
+  color: #f9f9f9;
   font-size: 1.5rem;
   border-bottom: 2px solid #333;
   padding-bottom: 10px;
@@ -152,11 +155,12 @@
 }
 
 .hist-main-content {
-  margin-top: 60px;
-  margin-bottom: 80px;
   width: 100%;
   box-sizing: border-box;
   padding: 0 20px;
+  background-color: #00010c;
+  border: .15rem solid #9E9E9F;
+  margin-bottom: -.2rem;
 }
 
 /* Table specific styles */
