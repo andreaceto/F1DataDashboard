@@ -1,0 +1,210 @@
+.home-main-container {
+    margin: 5rem 0rem 0rem 0rem;
+}
+
+/*  STANDINGS SELECTION BUTTONS  */
+
+.standings-table-header {
+    display: flex;
+    position: relative;
+}
+
+.standings-buttons {
+    position: absolute;
+    right: 0;
+    margin-top: -.3rem;
+    margin-right: -.5rem;
+}
+
+.standings-button {
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
+    background-color: #3E3E3E;
+    color: #F9F9F9;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 7rem;
+}
+
+.standings-button:hover {
+    background-color: darkred;
+    color: salmon;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    border: .15rem solid #FF0000;
+    border-radius: .3rem;
+}
+
+.standings-button.active:hover {
+    border: .15rem solid #9E9E9F;
+    background-color: #9E9E9F;
+    color: #F9F9F9;
+    font-weight: bold;
+    cursor: default;
+}
+
+.standings-button.active {
+    background-color: #9E9E9F;
+    font-weight: bold;
+}
+
+/*  DRIVER STANDINGS TABLe   */
+
+.th-fastest-lap-container {
+
+}
+
+.th-fastest-lap {
+    width: 24px;
+    margin-top: 3px;
+}
+
+.home-table-team-logo-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.home-table-team-logo {
+    max-width: 25px;
+    max-height: 25px;
+}
+
+.home-table-points {
+    color: #F9F9F9;
+    font-weight: 700;
+}
+
+.home-table-stats-container {
+    display: flex;
+    color: rgba(223, 220, 217, .6);
+    align-items: baseline;
+}
+
+.home-table-stats-primary {
+    color: #F9F9F9;
+}
+
+.home-table-stats-secondary {
+    font-size: .9rem;
+}
+
+.home-table-fastest-laps {
+    color: #F9F9F9;
+}
+
+.home-table-disclaimer-wrapper {
+    padding-top: .7rem;
+    padding-left: .5rem;
+    color: rgba(223, 220, 217, .6);
+    display: flex;
+    justify-content: space-between;
+}
+
+.home-table-disclaimer {
+    
+}
+
+/* CONSTRUCTOR STANDINGS TABLE  */
+
+.const-table-team {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.const-table-car-img-wrapper {
+    margin-right: .5rem;
+}
+
+.const-table-car-img {
+    width: 48px;
+}
+
+.const-table-team-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #F9F9F9;
+}
+
+.const-table-drivers {
+    cursor: pointer;
+}
+
+.const-table-driver-names-wrapper {
+    
+}
+
+.const-table-driver-names {
+    font-size: 1rem;
+    color: rgba(223, 220, 217, .6);
+}
+
+/*  PLOTS CONTAINER */
+
+.home-chart-container {
+    padding: 20px;
+    background-color: #00010c;
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    margin-bottom: 3rem;
+    contain: content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.home-chart-header {
+    color: rgba(223, 220, 217, .6);
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.home-chart-container img {
+    max-width: 1000px;
+    margin: -4rem 0rem 0rem 0rem;
+}
+
+/*  PLOT VISIBILITY HANDLER */
+
+.show-plot-button.show {
+    border: .15rem solid #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
+    background-color: #3E3E3E;
+    padding: .1rem .2rem;
+    cursor: pointer;
+}
+
+.show-plot-button.show:hover {
+    background-color: darkred;
+    color: salmon;
+    font-weight: bold;
+    cursor: pointer;
+    border: .15rem solid #FF0000;
+    border-radius: .3rem;
+}
+
+.show-plot-button.hide {
+    border: .15rem solid #9E9E9F;
+    background-color: #9E9E9F;
+    border-radius: .3rem;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.2);
+    padding: .1rem .2rem;
+    cursor: pointer;
+}
+
+.show-plot-button.hide:hover {
+    background-color: #3E3E3E;
+}
+
+.show-plot-button-icon {
+    width: 32px;
+}

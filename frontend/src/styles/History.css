@@ -1,0 +1,431 @@
+.hist-header-image-container {
+  font-family: Arial, sans-serif;
+  padding: 1vw;
+  text-align: center;
+  color: #ffffff;
+  width: 60%;
+  max-width: 600px;
+  height: auto;
+  margin: 0 auto;
+  margin-top: 3rem;
+}
+
+.hist-header-image {
+  width: 80%;
+  max-width: 80%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.hist-grid-section {
+  position: relative;
+}
+
+.hist-grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+  position: relative;
+  grid-auto-rows: 1fr;
+}
+
+.hist-additional-grid {
+  margin-top: 40px;
+  position: relative;
+}
+
+.hist-image-container {
+  position: relative;
+  overflow: visible;
+  border-radius: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.hist-history-logo {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+
+.hist-image-container:hover .history-logo {
+  transform: scale(1.08);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.hist-image-title {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1rem;
+  font-weight: bold;
+  color: #f9f9f9;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hist-navigation-buttons {
+  position: absolute;
+  top: 50%;
+  bottom: 50%;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s;
+}
+
+.hist-navigation-buttons button {
+  background-color: transparent;
+  color: #f9f9f9;
+  font-size: 1.5rem;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.hist-navigation-buttons.left {
+  left: -60px;
+}
+
+.hist-navigation-buttons.right {
+  right: -60px;
+}
+
+.hist-navigation-buttons:hover {
+  transform: scale(2.5);
+}
+
+.hist-table-container {
+  margin-top: .4rem;
+  margin-bottom: 1.5rem;
+}
+
+.hist-specific-page-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  color: #f9f9f9;
+}
+
+.hist-specific-page-table, .specific-page-table th, .specific-page-table td {
+  border: 1px solid #333;
+}
+
+.hist-specific-page-table th, .specific-page-table td {
+  padding: 12px;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0.9rem;
+  color: #e0e0e0;
+}
+
+.hist-specific-page-table th {
+  background: #333;
+  color: #f4f4f4;
+}
+
+.hist-specific-page-table tr:nth-child(even) {
+  background: #2a2a2a;
+}
+
+.hist-specific-page-table tr:nth-child(odd) {
+  background: #1f1f1f;
+}
+
+.hist-grid-title {
+  color: #f9f9f9;
+  font-size: 1.5rem;
+  border-bottom: 2px solid #333;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.hist-main-content {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+  background-color: #00010c;
+  border: .15rem solid #9E9E9F;
+  margin-bottom: -.2rem;
+}
+
+/* Table specific styles */
+
+.hist-world-championships-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-world-championships-table th, 
+.hist-world-championships-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-world-championships-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-wins-table th, 
+.hist-wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-podiums-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-podiums-table th, 
+.hist-podiums-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-podiums-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-points-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-points-table th, 
+.hist-points-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-points-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-pole-positions-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-pole-positions-table th, 
+.hist-pole-positions-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-pole-positions-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-constructors-championships-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-constructors-championships-table th, 
+.hist-constructors-championships-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-constructors-championships-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-constructors-wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-constructors-wins-table th, 
+.hist-constructors-wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-constructors-wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+
+.hist-constructors-podiums-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-constructors-podiums-table th, 
+.hist-constructors-podiums-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-constructors-podiums-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+
+
+.hist-constructors-starts-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  
+}
+
+.hist-constructors-starts-table th, 
+.hist-constructors-starts-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-constructors-starts-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-constructors-fastest-laps-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+  
+}
+
+.hist-constructors-fastest-laps-table th, 
+.hist-constructors-fastest-laps-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-constructors-fastest-laps-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-most-circuits-gp-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-most-circuits-gp-table th,
+.hist-most-circuits-gp-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-most-circuits-gp-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-most-nations-wins-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-most-nations-wins-table th,
+.hist-most-nations-wins-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-most-nations-wins-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
+
+.hist-most-nations-drivers-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 16px;
+  text-align: left;
+}
+
+.hist-most-nations-drivers-table th,
+.hist-most-nations-drivers-table td {
+  padding: 12px 15px;
+  border: 1px solid #333;
+}
+
+.hist-most-nations-drivers-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  background: #333;
+}
