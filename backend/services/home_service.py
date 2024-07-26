@@ -8,6 +8,7 @@ from services.common_service import *
 from data.model import *
 import os
 
+
 def generate_drivers_championship_plot(year):
     """
     Generates the drivers' championship plot for the specified year and saves it as an image.
@@ -15,7 +16,7 @@ def generate_drivers_championship_plot(year):
     Returns:
         dict: A dictionary containing the relative path to the generated plot image.
     """
-    races, results, sprint_results, drivers, constructos = get_championship_data(year)
+    races, results, sprint_results, drivers, constructors = get_championship_data(year)
     
     # Combining results makes no differences 
     results = results + sprint_results
@@ -59,19 +60,27 @@ def generate_drivers_championship_plot(year):
     fig, ax = plt.subplots()
     for position, (driver_id, points) in enumerate(sorted_drivers, start=1):
         driver_name = driver_names.get(driver_id, f"Driver {driver_id}")
-        ax.plot(range(len(points)), points, label=f"{position}. {driver_name}", color = DRIVER_C[driver_id], linestyle = LINESTYLES[DRIVER_LS[driver_id]])
-
+        ax.plot(range(len(points)), points, label=f"{position}. {driver_name}", color=DRIVER_C[driver_id], linestyle=LINESTYLES[DRIVER_LS[driver_id]])
 
     ax.set_xticks(range(len(sorted_races) + 1))  # +1 to account for the starting 0
-    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=30)
+    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=30, fontweight='bold', color='white')
     ax.grid(axis="x", linestyle="--")
-    ax.set_ylabel("Points")
-    ax.set_title(f"F1 Drivers' World Championship — {year}")
+    ax.set_ylabel("Points", fontweight='bold', color='white')
+    ax.set_title(f"F1 Drivers' World Championship — {year}", fontweight='bold', color='white')
     ax.legend()
 
     # Make the background transparent
     fig.patch.set_alpha(0.0)
     ax.patch.set_alpha(0.0)
+
+    # Set white and bold labels for y-ticks
+    plt.yticks(color='white', fontweight='bold')
+    plt.xticks(color='white', fontweight='bold')
+
+    # Set white and bold labels for legend
+    legend = ax.legend()
+    for text in legend.get_texts():
+        text.set_fontweight("bold")
 
     # Save the plot
     neutral_path = os.path.join('static', 'images', 'driver_championship_plot.png')
@@ -81,6 +90,7 @@ def generate_drivers_championship_plot(year):
     plt.close(fig)
 
     return {'driver_championship_plot_path': return_path}
+
 
 def generate_drivers_standings_table(year):
     """
@@ -93,20 +103,23 @@ def generate_drivers_standings_table(year):
 
     # Create a map driver_id -> driver_info
     driver_info = {driver['driverId']: driver for driver in drivers}
-
-    # Create a map constructor_id -> constructor_name
-    constructor_info = {constructor['constructorId']: constructor['name'] for constructor in constructors}
     
     # Initialize dictionary to store driver standings data
     driver_standings = defaultdict(lambda: {
-        'Driver': '',
-        'Nationality': '',
-        'Team': '',
+        'Name': '',
+        'Surname': '',
+        'TeamC': '',
+        'ProPic': '',
+        'NatFlag': '',
+        'TeamLogo': '',
         'Points': 0,
+        'Poles': 0,
+        'SprintPoles': 0,
         'Wins': 0,
         'SprintWins': 0,
         'Podiums': 0,
-        'SprintPodiums': 0
+        'SprintPodiums': 0,
+        'FastestLaps': 0
     })
     
     # Process each result to update driver standings
@@ -121,7 +134,13 @@ def generate_drivers_standings_table(year):
             driver_standings[driver_id]['Wins'] += 1
         if position <= 3:
             driver_standings[driver_id]['Podiums'] += 1
-        driver_standings[driver_id]['Team'] = constructor_info.get(constructor_id, 'Unknown')
+        if result['grid'] == 1:
+            driver_standings[driver_id]['Poles'] += 1
+        if result['rank'] == 1:
+            driver_standings[driver_id]['FastestLaps'] += 1
+
+        driver_standings[driver_id]['TeamC'] = TEAM_C.get(constructor_id, '')
+        driver_standings[driver_id]['TeamLogo'] = TEAM_LOGOS.get(constructor_id, '')
 
     # Process each sprint result to update driver standings
     for sprint_result in sprint_results:
@@ -134,11 +153,16 @@ def generate_drivers_standings_table(year):
             driver_standings[driver_id]['SprintWins'] += 1
         if position <= 3:
             driver_standings[driver_id]['SprintPodiums'] += 1
+        if sprint_result['grid'] == 1:
+            driver_standings[driver_id]['SprintPoles'] += 1
 
     # Fill in driver and team information
     for driver_id, info in driver_info.items():
-        driver_standings[driver_id]['Driver'] = f"{info['forename']} {info['surname']}"
-        driver_standings[driver_id]['Nationality'] = info['nationality']
+        driver_standings[driver_id]['Name'] = info['forename']
+        driver_standings[driver_id]['Surname'] = str(info['surname']).upper()
+        driver_standings[driver_id]['ProPic'] = DRIVER_PIC.get(driver_id, '')
+        driver_standings[driver_id]['NatFlag'] = NATIONALITY_FLAGS.get(driver_id, '')
+
 
     # Sort drivers by their final cumulative points in descending order, then by positionOrder
     driver_final_positions = {result['driverId']: result['positionOrder'] for result in results + sprint_results}
@@ -200,18 +224,27 @@ def generate_constructors_championship_plot(year):
     fig, ax = plt.subplots()
     for position, (constructor_id, points) in enumerate(sorted_constructors, start=1):
         constructor_name = constructor_names.get(constructor_id, f"Constructor {constructor_id}")
-        ax.plot(range(len(points)), points, label=f"{position}. {constructor_name}", color = TEAM_C[constructor_id], linestyle = '-')
+        ax.plot(range(len(points)), points, label=f"{position}. {constructor_name}", color=TEAM_C[constructor_id], linestyle='-')
 
     ax.set_xticks(range(len(sorted_races) + 1))  # +1 to account for the starting 0
-    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=30)
+    ax.set_xticklabels([''] + [f"{race_names[race_id]}" for race_id in sorted_races], rotation=30, fontweight='bold', color='white')
     ax.grid(axis="x", linestyle="--")
-    ax.set_ylabel("Points")
-    ax.set_title(f"F1 Constructors' World Championship — {year}")
+    ax.set_ylabel("Points", fontweight='bold', color='white')
+    ax.set_title(f"F1 Constructors' World Championship — {year}", fontweight='bold', color='white')
     ax.legend()
 
     # Make the background transparent
     fig.patch.set_alpha(0.0)
     ax.patch.set_alpha(0.0)
+
+    # Set white and bold labels for y-ticks
+    plt.yticks(color='white', fontweight='bold')
+    plt.xticks(color='white', fontweight='bold')
+
+    # Set white and bold labels for legend
+    legend = ax.legend()
+    for text in legend.get_texts():
+        text.set_fontweight("bold")
 
     # Save the plot
     neutral_path = os.path.join('static', 'images', 'constructor_championship_plot.png')
@@ -239,13 +272,18 @@ def generate_constructors_standings_table(year):
 
     # Initialize dictionary to store constructor standings data
     constructor_standings = defaultdict(lambda: {
+        'TeamC': '',
+        'Car': '',
         'Constructor': '',
+        'Drivers': [],
         'Points': 0,
+        'Poles': 0,
+        'SprintPoles': 0,
         'Wins': 0,
         'Podiums': 0,
         'SprintWins': 0,
         'SprintPodiums': 0,
-        'Drivers': []
+        'FastestLaps': 0
     })
     
     # Process each result to update constructor standings
@@ -260,6 +298,10 @@ def generate_constructors_standings_table(year):
             constructor_standings[constructor_id]['Wins'] += 1
         if position <= 3:
             constructor_standings[constructor_id]['Podiums'] += 1
+        if result['grid'] == 1:
+             constructor_standings[constructor_id]['Poles'] += 1
+        if result['rank'] == 1:
+             constructor_standings[constructor_id]['FastestLaps'] += 1
         constructor_standings[constructor_id]['Drivers'].append(driver_surnames[driver_id])
 
     # Process each sprint result to update constructor standings
@@ -274,11 +316,15 @@ def generate_constructors_standings_table(year):
             constructor_standings[constructor_id]['SprintWins'] += 1
         if position <= 3:
             constructor_standings[constructor_id]['SprintPodiums'] += 1
+        if sprint_result['grid'] == 1:
+             constructor_standings[constructor_id]['SprintPoles'] += 1
         constructor_standings[constructor_id]['Drivers'].append(driver_surnames[driver_id])
 
     # Fill in constructor information
     for constructor_id, info in constructor_info.items():
         constructor_standings[constructor_id]['Constructor'] = info['name']
+        constructor_standings[constructor_id]['TeamC'] = TEAM_C.get(constructor_id, '')
+        constructor_standings[constructor_id]['Car'] = CARS.get(constructor_id, '')[0]
 
     # Remove duplicates from drivers list
     for constructor_id in constructor_standings:
@@ -326,7 +372,7 @@ def generate_home_data(year):
 
     return {
         'driver_championship_plot_path': driver_plot_path,
-        'drivers_standings_table': driver_standings_table,
+        'driver_standings_table': driver_standings_table,
         'constructor_championship_plot_path': constructor_plot_path,
-        'constructors_standings_table': constructor_standings_table
+        'constructor_standings_table': constructor_standings_table
     }
